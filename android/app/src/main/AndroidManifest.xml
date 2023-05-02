@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mat3ami">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="mat3ami"
         android:name="${applicationName}"
