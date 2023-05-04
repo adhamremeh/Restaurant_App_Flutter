@@ -15,7 +15,9 @@ class DatabaseServices {
 
   initializeDatabase() async {
     connection = await MySqlConnection.connect(settings);
-    var result = await connection.query('select * from emplyee');
-    print(result);
+    Results results = await connection.query('select * from emplyee');
+    for (ResultRow result in results) {
+      print(result[0]);
+    }
   }
 }
