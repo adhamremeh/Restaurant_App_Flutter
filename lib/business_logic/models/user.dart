@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
 class User {
@@ -31,4 +34,50 @@ class User {
         phoneNumber1 = result['phoneNumber1'],
         phoneNumber2 = result['phoneNumber2'],
         salary = result['salary'];
+}
+
+class MenueItem {
+  String name;
+  int managerSsn;
+  double price;
+  String category;
+  bool availability;
+  String description;
+  Image image;
+  MenueItem(
+      {required this.name,
+      required this.managerSsn,
+      required this.price,
+      required this.category,
+      required this.availability,
+      required this.description,
+      required this.image});
+  MenueItem.fromDatabase(ResultRow result)
+      : name = result['name'],
+        managerSsn = result['managerSsn'],
+        price = result['price'],
+        category = result['category'],
+        availability = result['availability'],
+        description = result['description'],
+        image = result['image'];
+}
+
+class Order {
+  int orderId;
+  String orderStatus;
+  String dateTime;
+  int ammount;
+  String comment;
+  Order(
+      {required this.orderId,
+      required this.ammount,
+      required this.comment,
+      required this.dateTime,
+      required this.orderStatus});
+  Order.fromDatabase(ResultRow result)
+      : orderId = result['orderId'],
+        ammount = result['ammount'],
+        comment = result['comment'],
+        dateTime = result['dateTime'],
+        orderStatus = result['orderStatus'];
 }
