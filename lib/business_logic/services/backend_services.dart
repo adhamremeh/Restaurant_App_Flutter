@@ -10,7 +10,7 @@ class DatabaseServices {
   static late final MySqlConnection connection;
 
 //must be called at app laucnh
-  static initializeDatabase() async {
+  static void initializeDatabase() async {
     connection = await MySqlConnection.connect(_settings);
   }
 
