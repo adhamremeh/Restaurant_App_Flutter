@@ -12,10 +12,7 @@ class DatabaseServices {
 //must be called at app laucnh
   static Future<bool> initializeDatabase() async {
     connection = await MySqlConnection.connect(_settings);
-<<<<<<< HEAD
 
-=======
->>>>>>> e4e465ea762845fc50a3a19f2f4b1b9c9d91d2be
     return true;
   }
 
