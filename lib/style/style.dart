@@ -7,12 +7,21 @@ class CustomStyle {
 
 class _colorPalette {
 //write your colors here
-  Color activeOrange = Color.fromARGB(255, 227, 123, 100);
-  Color backgroundBlue1 = Color.fromARGB(255, 38, 40, 55);
-  Color backgroundBlue2 = Color.fromARGB(255, 31, 29, 44);
-  Color brightWhite = Color.fromARGB(255, 252, 251, 253);
-  Color midWhite = Color.fromARGB(255, 224, 222, 225);
-  Color dimWhite = Color.fromARGB(255, 187, 185, 188);
+  Color orange = Color(0xFFEA7C69);
+  Color orangeShadow = Color(0xFFF39F91);
+  Color lightBackgorund = Color(0xFF252836);
+  Color darkBackground = Color(0xFF1F1D2B);
+  Color textColor = Color(0xFFfbfbff);
+  Color yellow = Color(0xFFFFFF0E);
+  Color yellowShadow = Color(0xFFF9F92D);
+  Color red = Color(0xFFF60616);
+  Color redShadow = Color(0xFFF22230);
+  Color blue = Color(0xFF0645F6);
+  Color blueShadow = Color(0xFF5681FC);
+  Color green = Color(0xFF7EF606);
+  Color greenShadow = Color(0xFF6DC21A);
+  Color textField = Color(0xFF2D303E);
+  Color textFieldShadow = Color(0xFF393D4F);
 }
 
 class _fontSizes {

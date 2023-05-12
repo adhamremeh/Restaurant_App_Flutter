@@ -21,7 +21,14 @@ class User {
       required this.phoneNumber1,
       required this.phoneNumber2,
       required this.salary});
-  /* User.fromDatabase(ResultRow result){
-
-  } */
+  User.fromDatabase(ResultRow result)
+      : ssn = result['ssn'],
+        managerSsn = result['managerSsn'],
+        fName = result['fName'],
+        lName = result['lName'],
+        employeeRole = result['employeeRole'],
+        password = result['password'],
+        phoneNumber1 = result['phoneNumber1'],
+        phoneNumber2 = result['phoneNumber2'],
+        salary = result['salary'];
 }
