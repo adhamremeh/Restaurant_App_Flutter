@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomStyle {
   static final _colorPalette colorPalette = _colorPalette();
+  static final _fontSizes fontSizes = _fontSizes();
 }
 
 class _colorPalette {

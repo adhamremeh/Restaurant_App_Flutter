@@ -1,23 +1,22 @@
 import 'package:mysql1/mysql1.dart';
 
 class DatabaseServices {
-  var settings = ConnectionSettings(
+  static final _settings = ConnectionSettings(
       host: 'sql7.freemysqlhosting.net',
       port: 3306,
       user: 'sql7615587',
       password: 'R3ApeAvzTA',
       db: 'sql7615587');
-  late final MySqlConnection connection;
+  static late final MySqlConnection connection;
 
-  DatabaseServices() {
-    initializeDatabase();
+//must be called at app laucnh
+  static initializeDatabase() async {
+    connection = await MySqlConnection.connect(_settings);
   }
 
-  initializeDatabase() async {
-    connection = await MySqlConnection.connect(settings);
-    Results results = await connection.query('select * from emplyee');
-    for (ResultRow result in results) {
-      print(result[0]);
-    }
+//called to send a query to database
+  static Future<Results> queryDatabase(query) async {
+    Results results = await connection.query(query);
+    return results;
   }
 }
