@@ -26,7 +26,14 @@ class _colorPalette {
 
 class _fontSizes {
   //write common font size here
-  double miniSize = 14.0;
-  double medium = 20.0;
-  double large = 30;
+  double titleFont = 35;
+  double gridViewFont = 60;
+  double buttonTextFont = 30;
+  double orderDetailsFont = 25;
+  double itemOrderFont = 17;
+  double tabBarFont = 17;
+  double employeeNameFont = 20;
+  double employeeIdFont = 20;
+  double textFieldFont = 15;
+  double uploadButtonFont = 15;
 }
