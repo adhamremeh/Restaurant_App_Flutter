@@ -9,6 +9,6 @@ class Table {
     required this.state,
   });
   Table.fromDatabase(ResultRow result)
-      : tableNum = result['tableNum'],
-        state = result['state'];
+      : tableNum = result['tableNumber'],
+        state = result['tableStatus'];
 }
