@@ -10,6 +10,13 @@ class EmployeeServices {
     await DatabaseServices.queryDatabase(query);
   }
 
+//delete  employee
+  Future<void> deleteEmployeeFromDatabase(Employee user) async {
+    final String deleteQueuery =
+        "delete from employee where orderId = ${user.ssn};";
+    await DatabaseServices.queryDatabase(deleteQueuery);
+  }
+
 //fetch employee by ssn
   Future<Employee> fetchEmployeeFromDatabase(int ssn) async {
     final query = "select * from employee where ssn = '$ssn';";

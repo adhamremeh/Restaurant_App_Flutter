@@ -17,6 +17,7 @@ class MenuItem {
       required this.availability,
       required this.description,
       required this.image});
+  // Results
   MenuItem.fromDatabase(ResultRow result)
       : name = result['name'],
         managerSsn = result['managerSsn'],

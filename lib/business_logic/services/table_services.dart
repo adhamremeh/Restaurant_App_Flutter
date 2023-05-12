@@ -5,8 +5,7 @@ import 'package:mysql1/mysql1.dart';
 class TableServices {
   // add new Table
   static Future<void> addNewTableToDatabase() async {
-    const query =
-        "insert into dinningTable values(null, 'available');";
+    const query = "insert into dinningTable values(null, 'available');";
     await DatabaseServices.queryDatabase(query);
   }
 
@@ -28,5 +27,4 @@ class TableServices {
 
     return tableList;
   }
-
 }
