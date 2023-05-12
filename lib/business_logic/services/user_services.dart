@@ -1,19 +1,30 @@
+import 'package:mat3ami/business_logic/models/user.dart';
 import 'package:mat3ami/business_logic/services/backend_services.dart';
-import 'package:mat3ami/business_logic/view_models/active_user_view_model.dart';
+import 'package:mysql1/mysql1.dart';
 
 class UserServices {
-//log in operations
-  Future<bool> logInUser(String userId, String password) async {
-    String query =
-        "select * from employee where ssn = '$userId' and password = '$password';";
+//add new employee
+  Future<void> addNewEmployeeToDatabase(User user, int managerSsn) async {
+    final query =
+        "insert into employee values(null ,$managerSsn , '${user.fName}' , '${user.lName}' , '${user.password}' , ${user.salary} , '${user.employeeRole}');";
+    await DatabaseServices.queryDatabase(query);
+  }
 
+//fetch employee by ssn
+  Future<User> fetchEmployeeFromDatabase(int ssn) async {
+    final query = "select * from employee where ssn = '$ssn';";
     final result = await DatabaseServices.queryDatabase(query);
+    return User.fromDatabase(result.first);
+  }
 
-    if (result.isNotEmpty) {
-      ActiveUser().setActiveUser(result.first);
-      return true;
-    } else {
-      return false;
+  //fetch all employees
+  Future<List<User>> fetchAllEmlpoyeesFromDatabase() async {
+    const query = "select * from employee ;";
+    final result = await DatabaseServices.queryDatabase(query);
+    List<User> employeeList = [];
+    for (ResultRow emp in result) {
+      employeeList.add(User.fromDatabase(emp));
     }
+    return employeeList;
   }
 }
