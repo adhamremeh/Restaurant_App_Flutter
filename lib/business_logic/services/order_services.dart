@@ -84,7 +84,7 @@ class OrderServices {
   }
 
   //fetch all orders
-  Future<List<Order>> fetchAllOrdersFromDatabase() async {
+  static Future<List<Order>> fetchAllOrdersFromDatabase() async {
     const query =
         "select c.orderId , c.orderStatus, c.dateAndTime, c.tableNumber ,o.name , o.ammount,c.comments from customerOrder as c join orderMenuItems as o on c.orderId = o.orderId where c.orderStatus != 'completed' order by orderId asc  ;";
     final result = await DatabaseServices.queryDatabase(query);
