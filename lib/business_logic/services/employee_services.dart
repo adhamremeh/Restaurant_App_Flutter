@@ -2,7 +2,7 @@ import 'package:mat3ami/business_logic/models/employee.dart';
 import 'package:mat3ami/business_logic/services/backend_services.dart';
 import 'package:mysql1/mysql1.dart';
 
-class UserServices {
+class EmployeeServices {
 //add new employee
   Future<void> addNewEmployeeToDatabase(Employee user, int managerSsn) async {
     final query =
@@ -19,7 +19,7 @@ class UserServices {
 
   //fetch all employees
   Future<List<Employee>> fetchAllEmlpoyeesFromDatabase() async {
-    const query = "select * from employee ;";
+    const query = "select * from employee;";
     final result = await DatabaseServices.queryDatabase(query);
     List<Employee> employeeList = [];
     for (ResultRow emp in result) {

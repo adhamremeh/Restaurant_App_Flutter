@@ -1,14 +1,12 @@
 import 'package:mat3ami/business_logic/services/backend_services.dart';
-import 'package:mysql1/mysql1.dart';
 
-import '../models/employee.dart';
 import '../models/menu_item.dart';
 
 class MenuServices {
   // add new item to menue
-  Future<void> addNewMenuItemToDatabase(MenuItem name) async {
+  Future<void> addNewMenuItemToDatabase(MenuItem item, int managerSsn) async {
     final query =
-        "insert into menuitem values('${name.name}' , '${name.price}' , '${name.category}' , ${name.image} , '${name.availability}','${name.description}');";
+        "insert into menuitem values('${item.name}' , ${item.price} , '${item.category}' , ${item.image} , ${item.availability},'${item.description}',$managerSsn);";
     await DatabaseServices.queryDatabase(query);
   }
 
@@ -27,4 +25,9 @@ class MenuServices {
   }
 
 // Edit Item from menu items
+  Future<void> editMenuItemInDatabase(MenuItem item, int managerSsn) async {
+    final query =
+        "UPDATE menuitem SET name = '${item.name}', price = ${item.price},category = '${item.category}',image = ${item.image},availability = ${item.availability},description = '${item.description}' , managerSsn = $managerSsn where name= '${item.name}';";
+    await DatabaseServices.queryDatabase(query);
+  }
 }

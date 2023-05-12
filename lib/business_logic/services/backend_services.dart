@@ -10,8 +10,9 @@ class DatabaseServices {
   static late final MySqlConnection connection;
 
 //must be called at app laucnh
-  static void initializeDatabase() async {
+  static Future<bool> initializeDatabase() async {
     connection = await MySqlConnection.connect(_settings);
+    return true;
   }
 
 //called to send a query to database
