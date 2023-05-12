@@ -36,4 +36,5 @@ class _fontSizes {
   double employeeIdFont = 20;
   double textFieldFont = 15;
   double uploadButtonFont = 15;
+
 }
