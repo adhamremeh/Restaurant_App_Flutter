@@ -1,5 +1,7 @@
 import 'package:mysql1/mysql1.dart';
 
+enum TableStates { Available, Occupied }
+
 class Table {
   int tableNum;
   String state;
