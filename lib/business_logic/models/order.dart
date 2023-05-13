@@ -1,5 +1,6 @@
-import 'package:mat3ami/business_logic/models/menu_item.dart';
 import 'package:mysql1/mysql1.dart';
+
+enum OrderStates { Placed, Preparing, Ready, Served, Completed, Cancelled }
 
 class Order {
   int orderId;
@@ -20,20 +21,30 @@ class Order {
       required this.orderStatus,
       required this.menuItemsNamesAndCounts});
 
-  static Order fromDatabase(Results result) {
-    final orderId = result.first['orderId'];
-    final comments = result.first['comments'];
-    final dateTime = result.first['dateTime'];
-    final orderStatus = result.first['orderStatus'];
+  static Order fromDatabase(ResultRow result) {
+    final orderId = result['orderId'] as int;
+    final comments = result['comments'];
+    final dateTime = DateTime.parse(result['dateAndTime']);
+    final orderStatus = result['orderStatus'];
     final Map<String, int> menuItemsNamesAndCounts = {};
-    for (ResultRow row in result) {
-      menuItemsNamesAndCounts[row['name']] = row['ammount'];
+    final menuItemsNamesAndCountsList =
+        result['menuItemsNamesAndCounts'].toString().split(',');
+    for (String item in menuItemsNamesAndCountsList) {
+      final splitItem = item.split(':');
+      menuItemsNamesAndCounts[splitItem[0]] = int.parse(splitItem[1]);
     }
+
     return Order(
         orderId: orderId,
         comments: comments,
         dateTime: dateTime,
         orderStatus: orderStatus,
         menuItemsNamesAndCounts: menuItemsNamesAndCounts);
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return '$orderId , $comments , $dateTime , $orderStatus , $menuItemsNamesAndCounts';
   }
 }

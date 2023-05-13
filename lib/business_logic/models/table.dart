@@ -9,6 +9,12 @@ class Table {
     required this.state,
   });
   Table.fromDatabase(ResultRow result)
-      : tableNum = result['tableNumber'],
+      : tableNum = result['tableNumber'] as int,
         state = result['tableStatus'];
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return '$tableNum , $state';
+  }
 }

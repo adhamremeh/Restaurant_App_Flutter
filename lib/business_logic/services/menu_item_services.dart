@@ -1,33 +1,47 @@
 import 'package:mat3ami/business_logic/services/backend_services.dart';
+import 'package:mysql1/mysql1.dart';
 
 import '../models/menu_item.dart';
 
-class MenuServices {
+class MenuItemServices {
   // add new item to menue
-  static Future<void> addNewMenuItemToDatabase(MenuItem item, int managerSsn) async {
+  static Future<void> addNewMenuItemToDatabase(
+      MenuItem item, int managerSsn) async {
     final query =
-        "insert into menuitem values('${item.name}' , ${item.price} , '${item.category}' , ${item.image} , ${item.availability},'${item.description}', $managerSsn);";
+        "insert into menuItem values('${item.name}' , ${item.price} , '${item.category}' , ${item.image} , ${item.availability},'${item.description}', $managerSsn);";
     await DatabaseServices.queryDatabase(query);
   }
 
 //fetch MenuItem by name
   static Future<MenuItem> fetchMenuItemFromDatabase(String name) async {
-    final query = "select * from menuitem where name = '$name';";
+    final query = "select * from menuItem where name = '$name';";
     final result = await DatabaseServices.queryDatabase(query);
     return MenuItem.fromDatabase(result.first);
   }
 
+//fetch all MenuItems
+  static Future<List<MenuItem>> fetchAllMenuItemsFromDatabase() async {
+    const query = "select * from menuItem ;";
+    final result = await DatabaseServices.queryDatabase(query);
+    List<MenuItem> menuItemList = [];
+    for (ResultRow item in result) {
+      menuItemList.add(MenuItem.fromDatabase(item));
+    }
+    return menuItemList;
+  }
+
 // Delete menu items
   static Future<MenuItem> deleteMenuItemFromDatabase(String name) async {
-    final query = "DELETE FROM menuitem where name = '$name';";
+    final query = "DELETE FROM menuItem where name = '$name';";
     final result = await DatabaseServices.queryDatabase(query);
     return MenuItem.fromDatabase(result.first);
   }
 
 // Edit Item from menu items
-  static Future<void> editMenuItemInDatabase(MenuItem item, int managerSsn) async {
+  static Future<void> editMenuItemInDatabase(
+      MenuItem item, int managerSsn) async {
     final query =
-        "UPDATE menuitem SET name = '${item.name}', price = ${item.price},category = '${item.category}',image = ${item.image},availability = ${item.availability},description = '${item.description}' , managerSsn = $managerSsn where name= '${item.name}';";
+        "UPDATE menuItem SET name = '${item.name}', price = ${item.price},category = '${item.category}',image = ${item.image},availability = ${item.availability},description = '${item.description}' , managerSsn = $managerSsn where name= '${item.name}';";
     await DatabaseServices.queryDatabase(query);
   }
 }

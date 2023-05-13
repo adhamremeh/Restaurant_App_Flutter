@@ -78,41 +78,33 @@ class OrderServices {
   //fetch order from database
   Future<Order> fetchOrderFromDatabase(int orderId) async {
     String query =
-        "select c.orderId , c.orderStatus, c.dateAndTime, c.tableNumber ,o.name , o.ammount,c.comments from customerOrder as c join orderMenuItems as o on c.orderId = o.orderId where c.orderId = $orderId and orderStatus != 'CheckedOut' ;";
+        "select c.orderId , c.orderStatus, c.dateAndTime, c.tableNumber , c.comments ,GROUP_CONCAT(o.name , ':', o.ammount) as menuItemsNamesAndCounts from customerOrder as c join orderMenuItems as o on c.orderId = o.orderId where c.orderId = $orderId  GROUP by c.orderId;";
     final result = await DatabaseServices.queryDatabase(query);
-    return Order.fromDatabase(result);
+    return Order.fromDatabase(result.first);
   }
 
   //fetch all orders
-  static Future<List<Order>> fetchAllOrdersFromDatabase() async {
-    const query =
-        "select c.orderId , c.orderStatus, c.dateAndTime, c.tableNumber ,o.name , o.ammount,c.comments from customerOrder as c join orderMenuItems as o on c.orderId = o.orderId where c.orderStatus != 'completed' order by orderId asc  ;";
+  static Future<List<Order>> fetchAllOrdersFromDatabase(
+      {String status = '', bool activeOnly = true}) async {
+    if (activeOnly) {
+      if (status != '') {
+        status =
+            "where c.orderStatus = $status and c.orderStatus != '${OrderStates.Completed}'";
+      } else {
+        status = "where c.orderStatus != '${OrderStates.Completed}'";
+      }
+    } else if (status != '') {
+      status = 'where c.orderStatus = $status';
+    }
+    final query =
+        "select c.orderId , c.orderStatus, c.dateAndTime, c.tableNumber , c.comments ,GROUP_CONCAT(o.name , ':', o.ammount) as menuItemsNamesAndCounts from customerOrder as c join orderMenuItems as o on c.orderId = o.orderId $status  GROUP by c.orderId;";
     final result = await DatabaseServices.queryDatabase(query);
     if (result.isEmpty) return [];
     List<Order> orderList = [];
-    int currentOrderId = result.first['orderId'] as int;
-    String currentComments = result.first['comments'];
-    DateTime curreentDateTime = result.first['dateTime'];
-    String currentOrderStatus = result.first['orderStatus'];
-    Map<String, int> currentMenuItemsNamesAndCounts = {};
-    for (ResultRow row in result) {
-      if (row['orderId'] as int == currentOrderId && row != result.last) {
-        currentMenuItemsNamesAndCounts[row['name']] = row['ammount'];
-      } else {
-        orderList.add(Order(
-            comments: currentComments,
-            dateTime: curreentDateTime,
-            menuItemsNamesAndCounts: currentMenuItemsNamesAndCounts,
-            orderId: currentOrderId,
-            orderStatus: currentOrderStatus));
-        currentOrderId = row['orderId'] as int;
-        currentComments = row['comments'];
-        curreentDateTime = row['dateTime'];
-        currentOrderStatus = row['orderStatus'];
-        currentMenuItemsNamesAndCounts = {};
-        currentMenuItemsNamesAndCounts[row['name']] = row['ammount'];
-      }
+    for (final row in result) {
+      orderList.add(Order.fromDatabase(row));
     }
+
     return orderList;
   }
 }
