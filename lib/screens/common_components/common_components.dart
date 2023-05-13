@@ -63,3 +63,44 @@ Widget customButton(
         ),
       ));
 }
+
+Widget customTextField(
+    {required TextEditingController textEditingController,
+    required String hintText,
+    required double width,
+    required double height,
+    Icon? icon}) {
+  return SizedBox(
+    width: width,
+    height: height,
+    child: Container(
+      child: TextField(
+        controller: textEditingController,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(
+                  color: CustomStyle.colorPalette.textFieldColor,
+                )),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide(
+                width: 2.0,
+                color: CustomStyle
+                    .colorPalette.orange, // Sets the border color when focused
+              ),
+            ),
+            fillColor: CustomStyle.colorPalette.textFieldColor,
+            filled: true,
+            hintText: hintText,
+            hintStyle: TextStyle(
+                color: CustomStyle.colorPalette.textColor,
+                fontSize: 12,
+                fontWeight: FontWeight.w200),
+            icon: icon,
+            iconColor: Colors.white),
+        cursorColor: CustomStyle.colorPalette.darkBackground,
+      ),
+    ),
+  );
+}

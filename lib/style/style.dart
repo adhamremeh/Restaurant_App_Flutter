@@ -22,7 +22,7 @@ class _colorPalette {
   Color blueShadow = Color(0xFF5681FC);
   Color green = Color(0xFF7EF606);
   Color greenShadow = Color(0xFF6DC21A);
-  Color textField = Color(0xFF2D303E);
+  Color textFieldColor = Color(0xFF2D303E);
   Color textFieldShadow = Color(0xFF393D4F);
 }
 
