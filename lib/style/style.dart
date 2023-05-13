@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class CustomStyle {
   static final _colorPalette colorPalette = _colorPalette();
   static final _fontSizes fontSizes = _fontSizes();
+  static final fontFamily = 'Segoe';
 }
 
 class _colorPalette {
 //write your colors here
   Color orange = Color(0xFFEA7C69);
   Color orangeShadow = Color(0xFFF39F91);
+  Color orangeSplash = Color.fromARGB(255, 187, 119, 107);
   Color lightBackgorund = Color(0xFF252836);
   Color darkBackground = Color(0xFF1F1D2B);
   Color textColor = Color(0xFFfbfbff);
@@ -36,5 +38,4 @@ class _fontSizes {
   double employeeIdFont = 20;
   double textFieldFont = 15;
   double uploadButtonFont = 15;
-
 }

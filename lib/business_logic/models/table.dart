@@ -16,7 +16,6 @@ class Table {
 
   @override
   String toString() {
-    // TODO: implement toString
     return '$tableNum , $state';
   }
 }
