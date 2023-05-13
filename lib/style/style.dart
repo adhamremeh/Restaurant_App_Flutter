@@ -14,7 +14,7 @@ class _colorPalette {
   Color lightBackgorund = Color(0xFF252836);
   Color darkBackground = Color(0xFF1F1D2B);
   Color textColor = Color(0xFFfbfbff);
-  Color yellow = Color(0xFFFFFF0E);
+  Color yellow = Color.fromARGB(255, 154, 154, 23);
   Color yellowShadow = Color(0xFFF9F92D);
   Color red = Color(0xFFF60616);
   Color redShadow = Color(0xFFF22230);
@@ -24,6 +24,8 @@ class _colorPalette {
   Color greenShadow = Color(0xFF6DC21A);
   Color textFieldColor = Color(0xFF2D303E);
   Color textFieldShadow = Color(0xFF393D4F);
+  Color cyan = Color(0xFF69EAE6);
+  Color cyanShadow = Color(0xFF069E9E);
 }
 
 class _fontSizes {

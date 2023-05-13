@@ -6,11 +6,13 @@ import 'package:mat3ami/business_logic/services/menu_item_services.dart';
 import 'package:mat3ami/business_logic/services/order_services.dart';
 import 'package:mat3ami/business_logic/services/table_services.dart';
 import 'package:mat3ami/my_app.dart';
+import 'package:mat3ami/screens/common_components/combo_box.dart';
+import 'package:mat3ami/screens/playGround.dart';
 
 Future<void> main() async {
   await DatabaseServices.initializeDatabase();
 
-  runApp(MyApp());
+  runApp(MaterialApp(home: ComboBox()));
 
 /*   final result1 = await TableServices.fetchAllTablesFromDatabase();
   print('tables\n');
