@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mat3ami/screens/playGround.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -7,12 +8,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mat3ami',
-      home: Scaffold(
-        appBar: AppBar(),
-        body: Container(),
-      ),
-    );
+    return const MaterialApp(title: 'Mat3ami', home: PlayGround());
   }
 }
