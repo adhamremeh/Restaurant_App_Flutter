@@ -80,11 +80,11 @@ Widget customTextField(
     Icon? icon}) {
   return SizedBox(
     width: width,
-    height: height,
     child: Container(
       child: TextField(
         controller: textEditingController,
         decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: height),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
                 borderSide: BorderSide(
