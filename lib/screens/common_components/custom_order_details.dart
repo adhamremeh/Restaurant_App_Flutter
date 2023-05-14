@@ -4,8 +4,8 @@ import 'package:mat3ami/business_logic/models/order.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/style/style.dart';
 
-class PlayGround extends StatefulWidget {
-  PlayGround({super.key});
+class CustomOrderDetails extends StatefulWidget {
+  CustomOrderDetails({super.key});
   List<Order> orderlist = [
     Order(
         orderId: 1,
@@ -23,10 +23,10 @@ class PlayGround extends StatefulWidget {
         menuItemsNamesAndCounts: {"Pepsi": 1, "Pizza": 2, "Rice": 1}),
   ];
   @override
-  State<PlayGround> createState() => _PlayGroundState();
+  State<CustomOrderDetails> createState() => _CustomOrderDetailsState();
 }
 
-class _PlayGroundState extends State<PlayGround> {
+class _CustomOrderDetailsState extends State<CustomOrderDetails> {
   @override
   Widget build(BuildContext context) {
     Map<String, int> allItemsAndCounts = {};
@@ -198,9 +198,9 @@ class customOrderDetails extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                //////////////////////////////////// ADD Total Price Here ////////////////////////////////////////////////////////////
-                                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// ADD Total Price Here ////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                               ],
                             ),
                           ],
