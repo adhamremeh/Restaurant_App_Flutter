@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/services/backend_services.dart';
 import 'package:mysql1/mysql1.dart';
 
-class ActiveUser extends ChangeNotifier {
+class ActiveUserViewModel extends ChangeNotifier {
   //attributes
   static String id = '';
   static String name = '';
@@ -15,7 +15,7 @@ class ActiveUser extends ChangeNotifier {
     final result = await DatabaseServices.queryDatabase(query);
 
     if (result.isNotEmpty) {
-      ActiveUser().setActiveUser(result.first);
+      ActiveUserViewModel().setActiveUser(result.first);
       return true;
     } else {
       return false;

@@ -30,7 +30,7 @@ class _colorPalette {
 
 class _fontSizes {
   //write common font size here
-  double titleFont = 35;
+  double titleFont = 27;
   double gridViewFont = 60;
   double buttonTextFont = 30;
   double orderDetailsFont = 25;
@@ -40,4 +40,5 @@ class _fontSizes {
   double employeeIdFont = 20;
   double textFieldFont = 15;
   double uploadButtonFont = 15;
+  double dropDownMenu = 12;
 }

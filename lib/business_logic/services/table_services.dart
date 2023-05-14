@@ -1,4 +1,4 @@
-import 'package:mat3ami/business_logic/models/table.dart';
+import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/services/backend_services.dart';
 import 'package:mysql1/mysql1.dart';
 
@@ -10,19 +10,19 @@ class TableServices {
   }
 
   //fetch Table by number
-  static Future<Table> fetchTableFromDatabase(int num) async {
+  static Future<TableInRestaurant> fetchTableFromDatabase(int num) async {
     final query = "select * from dinningTable where tableNumber = '$num';";
     final result = await DatabaseServices.queryDatabase(query);
-    return Table.fromDatabase(result.first);
+    return TableInRestaurant.fromDatabase(result.first);
   }
 
   //fetch all Tables
-  static Future<List<Table>> fetchAllTablesFromDatabase() async {
+  static Future<List<TableInRestaurant>> fetchAllTablesFromDatabase() async {
     const query = "select * from dinningTable;";
     final result = await DatabaseServices.queryDatabase(query);
-    List<Table> tableList = [];
+    List<TableInRestaurant> tableList = [];
     for (ResultRow tbl in result) {
-      tableList.add(Table.fromDatabase(tbl));
+      tableList.add(TableInRestaurant.fromDatabase(tbl));
     }
 
     return tableList;

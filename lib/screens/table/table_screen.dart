@@ -1,4 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
+import 'package:mat3ami/business_logic/view_models/table_view_model.dart';
+import 'package:mat3ami/screens/common_components/common_components.dart';
+import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
+import 'package:mat3ami/style/style.dart';
+import 'package:provider/provider.dart';
 
 class TablesScreen extends StatefulWidget {
   const TablesScreen({Key? key}) : super(key: key);
@@ -9,6 +17,7 @@ class TablesScreen extends StatefulWidget {
 
 class _TablesScreenState extends State<TablesScreen> {
   int _selectedBoxIndex = -1;
+  late List<TableInRestaurant> tableList;
 
   void _onBoxPressed(int index) {
     setState(() {
@@ -17,58 +26,71 @@ class _TablesScreenState extends State<TablesScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var timer = Timer.periodic(
+        Duration(seconds: 10),
+        (Timer t) => Provider.of<TableViewModel>(context, listen: false)
+            .updateTableList());
+  }
+
+  @override
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+    tableList = Provider.of<TableViewModel>(context, listen: true).tableList;
+    return customScaffold(
+      context: context,
+      title: 'Tables',
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {},
         ),
-        title: Text(
-          'Tables',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Color(0xFF1F1D2B),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Color(0xFF252836),
+      ],
+      body: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1.5,
-          ),
-          itemCount: 10,
+              crossAxisCount: 2, mainAxisSpacing: 30, crossAxisSpacing: 10),
+          itemCount: tableList.length,
           itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () => _onBoxPressed(index),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.45,
-                height: MediaQuery.of(context).size.width * 0.45 * 0.75,
-                decoration: BoxDecoration(
-                  color: index == _selectedBoxIndex
-                      ? Colors.blue
-                      : Color(0xFF1F1D2B),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.025,
-                  vertical: MediaQuery.of(context).size.width * 0.025,
-                ),
-                child: Center(
-                  child: Text(
-                    '${index + 1}',
-                    style: TextStyle(fontSize: 24, color: Colors.white),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 30,
+                  child: customContainer(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    child: Center(
+                      child: Text('${tableList[index].tableNum}',
+                          style: TextStyle(
+                            fontFamily: CustomStyle.fontFamily,
+                            fontSize: 50,
+                            color: (tableList[index].state.toLowerCase() ==
+                                    'available')
+                                ? CustomStyle.colorPalette.green
+                                : CustomStyle.colorPalette.orange,
+                          )),
+                    ),
                   ),
                 ),
-              ),
+                Expanded(flex: 1, child: Container()),
+                Expanded(
+                    flex: 6,
+                    child: Text(
+                      '${tableList[index].state}',
+                      style: TextStyle(
+                        fontFamily: CustomStyle.fontFamily,
+                        fontSize: CustomStyle.fontSizes.orderDetailsFont,
+                        color: (tableList[index].state.toLowerCase() ==
+                                'available')
+                            ? CustomStyle.colorPalette.green
+                            : CustomStyle.colorPalette.orange,
+                      ),
+                    )),
+              ],
             );
           },
         ),
