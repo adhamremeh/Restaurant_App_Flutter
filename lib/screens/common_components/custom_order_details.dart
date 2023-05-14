@@ -20,7 +20,11 @@ class CustomOrderDetails extends StatefulWidget {
         dateTime: DateTime.now(),
         orderStatus:
             OrderStates.Placed.toString().replaceFirst("OrderStates.", ""),
-        menuItemsNamesAndCounts: {"Pepsi": 1, "Pizza": 2, "Rice": 1}),
+        menuItemsNamesAndCounts: {
+          "Pepsi": 1,
+          "Pizza": 3,
+          "Rice": 1,
+        }),
   ];
   @override
   State<CustomOrderDetails> createState() => _CustomOrderDetailsState();
@@ -30,8 +34,10 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
   @override
   Widget build(BuildContext context) {
     Map<String, int> allItemsAndCounts = {};
-    for (Order currentOrder in widget.orderlist) {
-      allItemsAndCounts.addAll(currentOrder.menuItemsNamesAndCounts);
+    for (var order in widget.orderlist) {
+      order.menuItemsNamesAndCounts.forEach((key, value) {
+        allItemsAndCounts[key] = (allItemsAndCounts[key] ?? 0) + value;
+      });
     }
 
     return Scaffold(
@@ -52,8 +58,8 @@ class customOrderDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: customContainer(
-        width: 600.0,
-        height: 600.0,
+        width: 485.0,
+        height: 455.0,
         child: Column(
           children: [
             Padding(
