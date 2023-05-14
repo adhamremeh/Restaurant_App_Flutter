@@ -8,7 +8,7 @@ class ActiveUserViewModel extends ChangeNotifier {
   static String name = '';
   static String role = '';
 
-  Future<bool> logInUser(String userId, String password) async {
+  static Future<bool> logInUser(String userId, String password) async {
     String query =
         "select * from employee where ssn = '$userId' and password = '$password';";
 

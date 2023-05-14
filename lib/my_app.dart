@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/view_models/table_view_model.dart';
 import 'package:mat3ami/screens/common_components/custom_order_details.dart';
 import 'package:mat3ami/screens/playGround.dart';
+import 'package:mat3ami/screens/log_in/log_in_screent.dart';
 import 'package:mat3ami/screens/table/table_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: CustomOrderDetails(),
+        home: LogInScreen(),
       ),
     );
   }

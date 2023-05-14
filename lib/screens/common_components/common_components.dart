@@ -72,19 +72,23 @@ Widget customButton(
       ));
 }
 
+
 Widget customTextField(
     {required TextEditingController textEditingController,
     required String hintText,
     required double width,
     required double height,
-    Icon? icon}) {
+
+  Icon? icon}) {
   return SizedBox(
     width: width,
+    height: height,
     child: Container(
       child: TextField(
         controller: textEditingController,
+        style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: height),
+            // contentPadding: EdgeInsets.symmetric(vertical: height),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
                 borderSide: BorderSide(

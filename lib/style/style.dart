@@ -32,7 +32,7 @@ class _fontSizes {
   //write common font size here
   double titleFont = 27;
   double gridViewFont = 60;
-  double buttonTextFont = 30;
+  double buttonTextFont = 20;
   double orderDetailsFont = 25;
   double itemOrderFont = 17;
   double tabBarFont = 17;

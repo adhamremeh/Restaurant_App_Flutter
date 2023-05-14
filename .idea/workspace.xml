@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1584b715-66be-45a8-a252-3438e559b12d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/version" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/business_logic/models/employee.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/business_logic/models/employee.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/business_logic/services/employee_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/business_logic/services/employee_services.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/business_logic/services/menu_item_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/business_logic/services/menu_item_services.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/business_logic/services/order_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/business_logic/services/order_services.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/business_logic/view_models/active_user_view_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/business_logic/view_models/active_user_view_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/my_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my_app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/common_components/common_components.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/common_components/common_components.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/log_in/log_in_screent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/log_in/log_in_screent.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/style/style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/style/style.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
