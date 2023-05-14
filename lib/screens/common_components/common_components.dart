@@ -31,26 +31,33 @@ Widget customButton(
     double borderRadius = 40, //default curvature of edges
     TextStyle?
         textStyle //if you want a different text size , color , etc pass the style you want here
-    }) {
+    ,
+    Color? color,
+    Color? shadowColor}) {
   return SizedBox(
       //default size of button , if you enter a width or height as a parameter it will use it instead
       width: width ?? MediaQuery.of(context).size.width * 0.71,
       height: height ?? MediaQuery.of(context).size.height * 0.1,
       child: ElevatedButton(
         style: ButtonStyle(
-            overlayColor:
-                MaterialStatePropertyAll(CustomStyle.colorPalette.orangeSplash),
+            overlayColor: (color == null)
+                ? MaterialStatePropertyAll(
+                    CustomStyle.colorPalette.orangeSplash)
+                : MaterialStatePropertyAll(color),
             elevation: const MaterialStatePropertyAll(4),
-            shadowColor:
-                MaterialStatePropertyAll(CustomStyle.colorPalette.orangeShadow),
+            shadowColor: (shadowColor == null)
+                ? MaterialStatePropertyAll(
+                    CustomStyle.colorPalette.orangeShadow)
+                : MaterialStatePropertyAll(shadowColor),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 // Change your radius here
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
             ),
-            backgroundColor:
-                MaterialStatePropertyAll(CustomStyle.colorPalette.orange)),
+            backgroundColor: (color == null)
+                ? MaterialStatePropertyAll(CustomStyle.colorPalette.orange)
+                : MaterialStatePropertyAll(color)),
         onPressed: onPressed,
         child: Text(
           childText,
