@@ -82,15 +82,13 @@ class customOrderDetails extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
                 itemCount: allItemsAndCounts.length + 1,
                 itemBuilder: (context, index) {
                   if (index < allItemsAndCounts.length - 1) {
                     final itemName = allItemsAndCounts.keys.elementAt(index);
                     final itemCount = allItemsAndCounts.values.elementAt(index);
                     return ListTile(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 35.0),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 35.0),
                       title: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,15 +137,14 @@ class customOrderDetails extends StatelessWidget {
                     final itemName = allItemsAndCounts.keys.elementAt(index);
                     final itemCount = allItemsAndCounts.values.elementAt(index);
                     return ListTile(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 35.0),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 36.0),
                       title: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 35.0, right: 35.0),
+                            padding: const EdgeInsets.only(
+                                left: 35.0, right: 35.0, bottom: 10.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
