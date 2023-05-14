@@ -12,6 +12,8 @@ class Order {
 
   get getTotal => this.total;
 
+  get allItemsAndCounts => null;
+
   set setTotal(total) => this.total = total;
 
   Order(
