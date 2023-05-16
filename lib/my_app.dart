@@ -4,6 +4,7 @@ import 'package:mat3ami/screens/common_components/custom_order_details.dart';
 import 'package:mat3ami/screens/playGround.dart';
 import 'package:mat3ami/screens/log_in/log_in_screent.dart';
 import 'package:mat3ami/screens/table/table_screen.dart';
+import 'package:mat3ami/screens/table_keeping_available/table_keeping_occupied.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: LogInScreen(),
+        home: OccupiedTableKeeping(),
       ),
     );
   }
