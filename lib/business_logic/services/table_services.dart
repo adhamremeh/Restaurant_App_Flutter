@@ -10,19 +10,19 @@ class TableServices {
   }
 
   //fetch Table by number
-  static Future<TableInRestaurant> fetchTableFromDatabase(int num) async {
+  static Future<OrdersList> fetchTableFromDatabase(int num) async {
     final query = "select * from dinningTable where tableNumber = '$num';";
     final result = await DatabaseServices.queryDatabase(query);
-    return TableInRestaurant.fromDatabase(result.first);
+    return OrdersList.fromDatabase(result.first);
   }
 
   //fetch all Tables
-  static Future<List<TableInRestaurant>> fetchAllTablesFromDatabase() async {
+  static Future<List<OrdersList>> fetchAllTablesFromDatabase() async {
     const query = "select * from dinningTable;";
     final result = await DatabaseServices.queryDatabase(query);
-    List<TableInRestaurant> tableList = [];
+    List<OrdersList> tableList = [];
     for (ResultRow tbl in result) {
-      tableList.add(TableInRestaurant.fromDatabase(tbl));
+      tableList.add(OrdersList.fromDatabase(tbl));
     }
 
     return tableList;

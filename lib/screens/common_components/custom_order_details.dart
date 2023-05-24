@@ -13,7 +13,8 @@ class CustomOrderDetails extends StatefulWidget {
         dateTime: DateTime.now(),
         orderStatus:
             OrderStates.Placed.toString().replaceFirst("OrderStates.", ""),
-        menuItemsNamesAndCounts: {"Pasta": 1, "Pizza": 2, "koshry": 1}),
+        menuItemsNamesAndCounts: {"Pasta": 1, "Pizza": 2, "koshry": 1},
+        tableNum: 1),
     Order(
         orderId: 2,
         comments: "This is Pepsi",
@@ -24,7 +25,8 @@ class CustomOrderDetails extends StatefulWidget {
           "Pepsi": 1,
           "Pizza": 3,
           "Rice": 1,
-        }),
+        },
+        tableNum: 2),
   ];
   @override
   State<CustomOrderDetails> createState() => _CustomOrderDetailsState();

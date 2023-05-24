@@ -23,7 +23,6 @@ class _ComboBoxState extends State<ComboBox> {
     if (selectedOption.toString() == 'OrderStates.Placed') {
       selectedColor = CustomStyle.colorPalette.orange;
       selectedColorShadow = CustomStyle.colorPalette.orangeShadow;
-      print('3azma');
     } else if (selectedOption.toString() == 'OrderStates.Preparing') {
       selectedColorShadow = CustomStyle.colorPalette.yellowShadow;
       selectedColor = CustomStyle.colorPalette.yellow;
@@ -42,8 +41,6 @@ class _ComboBoxState extends State<ComboBox> {
     } else {
       selectedColor = CustomStyle.colorPalette.textFieldColor;
       selectedColorShadow = CustomStyle.colorPalette.textFieldShadow;
-      print(selectedOption.toString().runtimeType); //testing
-      print(selectedOption.toString());
     }
     return Scaffold(
       body: Container(

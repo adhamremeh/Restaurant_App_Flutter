@@ -31,7 +31,8 @@ class _PlayGroundState extends State<PlayGround> {
               comments: '',
               dateTime: DateTime.now(),
               menuItemsNamesAndCounts: {},
-              orderId: 1),
+              orderId: 1,
+              tableNum: 2),
         ),
       ),
     );

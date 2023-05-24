@@ -9,6 +9,7 @@ class Order {
   String comments;
   Map<String, int> menuItemsNamesAndCounts;
   double total = 0.0;
+  int tableNum;
 
   get getTotal => this.total;
 
@@ -21,7 +22,8 @@ class Order {
       required this.comments,
       required this.dateTime,
       required this.orderStatus,
-      required this.menuItemsNamesAndCounts});
+      required this.menuItemsNamesAndCounts,
+      required this.tableNum});
 
   static Order fromDatabase(ResultRow result) {
     final orderId = result['orderId'] as int;
@@ -31,6 +33,7 @@ class Order {
     final Map<String, int> menuItemsNamesAndCounts = {};
     final menuItemsNamesAndCountsList =
         result['menuItemsNamesAndCounts'].toString().split(',');
+    final tableNum = result['tableNumber'] as int;
     for (String item in menuItemsNamesAndCountsList) {
       final splitItem = item.split(':');
       menuItemsNamesAndCounts[splitItem[0]] = int.parse(splitItem[1]);
@@ -41,12 +44,13 @@ class Order {
         comments: comments,
         dateTime: dateTime,
         orderStatus: orderStatus,
-        menuItemsNamesAndCounts: menuItemsNamesAndCounts);
+        menuItemsNamesAndCounts: menuItemsNamesAndCounts,
+        tableNum: tableNum);
   }
 
   @override
   String toString() {
     // TODO: implement toString
-    return '$orderId , $comments , $dateTime , $orderStatus , $menuItemsNamesAndCounts';
+    return '$orderId , $comments , $dateTime , $orderStatus , $menuItemsNamesAndCounts,$tableNum';
   }
 }

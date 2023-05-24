@@ -2,15 +2,15 @@ import 'package:mysql1/mysql1.dart';
 
 enum TableStates { Available, Occupied }
 
-class TableInRestaurant {
+class OrdersList {
   int tableNum;
   String state;
 
-  TableInRestaurant({
+  OrdersList({
     required this.tableNum,
     required this.state,
   });
-  TableInRestaurant.fromDatabase(ResultRow result)
+  OrdersList.fromDatabase(ResultRow result)
       : tableNum = result['tableNumber'] as int,
         state = result['tableStatus'];
 

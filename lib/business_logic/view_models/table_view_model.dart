@@ -3,7 +3,7 @@ import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/services/table_services.dart';
 
 class TableViewModel extends ChangeNotifier {
-  List<TableInRestaurant> tableList = [];
+  List<OrdersList> tableList = [];
 
   TableViewModel() {
     updateTableList();

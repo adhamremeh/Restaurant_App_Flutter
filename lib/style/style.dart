@@ -41,4 +41,5 @@ class _fontSizes {
   double textFieldFont = 15;
   double uploadButtonFont = 15;
   double dropDownMenu = 12;
+  double tableIDOrderMenue = 25;
 }
