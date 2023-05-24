@@ -62,16 +62,30 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Order Details'),
-                                content: Text(""),
+                                backgroundColor:
+                                    CustomStyle.colorPalette.lightBackgorund,
+                                title: Text(
+                                  'Order Details',
+                                  style: TextStyle(
+                                      color: CustomStyle.colorPalette.textColor,
+                                      fontFamily: CustomStyle.fontFamily,
+                                      fontSize: CustomStyle
+                                          .fontSizes.orderDetailsFont,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                content: CustomOrderDetails(), //error here
                                 actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      // Perform some action
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Close'),
-                                  ),
+                                  customButton(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1898,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.0357,
+                                      context: context,
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      childText: "OK"),
                                 ],
                               );
                             },
