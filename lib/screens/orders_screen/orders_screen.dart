@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
-import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
-import 'package:mat3ami/screens/common_components/custom_order_details.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
-import 'package:mat3ami/business_logic/services/order_services.dart';
 import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +55,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         color: CustomStyle.colorPalette.lightBackgorund,
                         shadowColor: CustomStyle.colorPalette.lightBackgorund,
                         onPressed: () {
+                          //when pressed on the order id pop up screen shows
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -73,7 +71,117 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                           .fontSizes.orderDetailsFont,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                content: CustomOrderDetails(), //error here
+                                content: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.77,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.6,
+                                  child: SingleChildScrollView(
+                                    physics: ScrollPhysics(),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 200,
+                                          height: 200,
+                                          child: ListView.separated(
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            itemCount: ordersList[index]
+                                                .menuItemsNamesAndCounts
+                                                .length,
+                                            separatorBuilder:
+                                                (BuildContext context, int x) =>
+                                                    Divider(
+                                              thickness: 2,
+                                              color: CustomStyle
+                                                  .colorPalette.textColor,
+                                            ),
+                                            itemBuilder:
+                                                (BuildContext context, int x) {
+                                              return ListTile(
+                                                leading: Text(
+                                                  '${ordersList[index].menuItemsNamesAndCounts.keys.toList()[x]}',
+                                                  style: TextStyle(
+                                                      color: CustomStyle
+                                                          .colorPalette
+                                                          .textColor,
+                                                      fontFamily: CustomStyle
+                                                          .fontFamily,
+                                                      fontSize: CustomStyle
+                                                          .fontSizes
+                                                          .itemOrderFont,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                trailing: Text(
+                                                  '${ordersList[index].menuItemsNamesAndCounts.values.toList()[x]}',
+                                                  style: TextStyle(
+                                                      color: CustomStyle
+                                                          .colorPalette
+                                                          .textColor,
+                                                      fontFamily: CustomStyle
+                                                          .fontFamily,
+                                                      fontSize: CustomStyle
+                                                          .fontSizes
+                                                          .itemOrderFont,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        Divider(
+                                          thickness: 2,
+                                          color: CustomStyle
+                                              .colorPalette.textColor,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Comments ",
+                                                style: TextStyle(
+                                                    color: CustomStyle
+                                                        .colorPalette.textColor,
+                                                    fontFamily:
+                                                        CustomStyle.fontFamily,
+                                                    fontSize: CustomStyle
+                                                        .fontSizes
+                                                        .orderDetailsFont,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                "${ordersList[index].comments}",
+                                                style: TextStyle(
+                                                    color: CustomStyle
+                                                        .colorPalette.textColor,
+                                                    fontFamily:
+                                                        CustomStyle.fontFamily,
+                                                    fontSize: CustomStyle
+                                                        .fontSizes
+                                                        .itemOrderFont,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 actions: [
                                   customButton(
                                       width: MediaQuery.of(context).size.width *
@@ -90,8 +198,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               );
                             },
                           );
-
-                          print(ordersList.length);
                         }));
               },
               separatorBuilder: (BuildContext context, int index) {

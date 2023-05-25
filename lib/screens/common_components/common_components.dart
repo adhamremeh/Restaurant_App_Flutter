@@ -24,18 +24,19 @@ Container customContainer(
   );
 }
 
-Widget customButton(
-    {required BuildContext context,
-    required onPressed, //pass function that will execute when button is pressed here inside (){}
-    required String childText, //text written inside the button
-    double? width,
-    double? height,
-    double borderRadius = 40, //default curvature of edges
-    TextStyle?
-        textStyle //if you want a different text size , color , etc pass the style you want here
-    ,
-    Color? color,
-    Color? shadowColor}) {
+Widget customButton({
+  required BuildContext context,
+  required onPressed, //pass function that will execute when button is pressed here inside (){}
+  required String childText, //text written inside the button
+  double? width,
+  double? height,
+  double borderRadius = 40, //default curvature of edges
+  TextStyle?
+      textStyle //if you want a different text size , color , etc pass the style you want here
+  ,
+  Color? color,
+  Color? shadowColor,
+}) {
   return SizedBox(
       //default size of button , if you enter a width or height as a parameter it will use it instead
       width: width ?? MediaQuery.of(context).size.width * 0.71,
