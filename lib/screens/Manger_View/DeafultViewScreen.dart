@@ -15,10 +15,16 @@ class DeafultViewScreen extends StatefulWidget {
 class _DeafultViewScreenState extends State<DeafultViewScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  final List<Tab> myTabs = [
+    Tab(text: 'Employee'),
+    Tab(text: 'Menu'),
+    Tab(text: 'Orders'),
+  ];
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabSelection);
   }
 
   @override
@@ -27,24 +33,25 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
     super.dispose();
   }
 
+  void _handleTabSelection() {
+    setState(() {
+      // Retrieve the selected tab value
+      String? selectedTab = myTabs[_tabController.index].text;
+      print(selectedTab);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         bottom: TabBar(
-          controller: _tabController,
-          tabs: const <Widget>[
-            Tab(
-              text: "Employee",
-            ),
-            Tab(
-              text: "Menu",
-            ),
-            Tab(
-              text: "Orders",
-            ),
-          ],
-        ),
+            indicatorWeight: 3,
+            indicatorColor: CustomStyle.colorPalette.orange,
+            controller: _tabController,
+            labelColor: CustomStyle.colorPalette.orange,
+            unselectedLabelColor: CustomStyle.colorPalette.textColor,
+            tabs: myTabs),
         centerTitle: true,
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         leading: IconButton(
