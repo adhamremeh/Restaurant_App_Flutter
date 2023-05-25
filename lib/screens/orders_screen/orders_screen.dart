@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';

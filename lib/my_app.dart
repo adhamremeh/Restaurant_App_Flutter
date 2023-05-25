@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/table_view_model.dart';
+import 'package:mat3ami/screens/Manger_View/DeafultViewScreen.dart';
 import 'package:mat3ami/screens/common_components/custom_order_details.dart';
 import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
 import 'package:mat3ami/screens/playGround.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: OrdersScreen(),
+        home: DeafultViewScreen(),
       ),
     );
   }
