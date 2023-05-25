@@ -14,7 +14,7 @@ class OrdersScreen extends StatefulWidget {
   State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
-late List<Order> ordersList;
+late List<Order> orderList;
 
 class _OrdersScreenState extends State<OrdersScreen> {
   void initState() {
@@ -27,7 +27,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ordersList = Provider.of<OrderViewModel>(context, listen: true)
+    orderList = Provider.of<OrderViewModel>(context, listen: true)
         .ordersList
         .cast<Order>();
 
@@ -36,18 +36,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
         body: Scaffold(
             backgroundColor: CustomStyle.colorPalette.lightBackgorund,
             body: ListView.separated(
-              itemCount: ordersList.length,
+              itemCount: orderList.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                     leading: Text(
-                      "${ordersList[index].tableNum}",
+                      "${orderList[index].tableNum}",
                       style: TextStyle(
                           color: CustomStyle.colorPalette.green,
                           fontSize: CustomStyle.fontSizes.tableIDOrderMenue),
                     ),
-                    trailing: CustomDropDownButton(order: ordersList[index]),
+                    trailing: CustomDropDownButton(order: orderList[index]),
                     title: customButton(
-                        childText: '#${ordersList[index].orderId}',
+                        childText: '#${orderList[index].orderId}',
                         context: context,
                         width: MediaQuery.of(context).size.width * 0.25,
                         height: MediaQuery.of(context).size.height * 0.044,
@@ -85,7 +85,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                           child: ListView.separated(
                                             physics:
                                                 NeverScrollableScrollPhysics(),
-                                            itemCount: ordersList[index]
+                                            itemCount: orderList[index]
                                                 .menuItemsNamesAndCounts
                                                 .length,
                                             separatorBuilder:
@@ -99,7 +99,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                 (BuildContext context, int x) {
                                               return ListTile(
                                                 leading: Text(
-                                                  '${ordersList[index].menuItemsNamesAndCounts.keys.toList()[x]}',
+                                                  '${orderList[index].menuItemsNamesAndCounts.keys.toList()[x]}',
                                                   style: TextStyle(
                                                       color: CustomStyle
                                                           .colorPalette
@@ -113,7 +113,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                           FontWeight.bold),
                                                 ),
                                                 trailing: Text(
-                                                  '${ordersList[index].menuItemsNamesAndCounts.values.toList()[x]}',
+                                                  '${orderList[index].menuItemsNamesAndCounts.values.toList()[x]}',
                                                   style: TextStyle(
                                                       color: CustomStyle
                                                           .colorPalette
@@ -163,8 +163,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                                "${ordersList[index].comments}",
+                                            Text("${orderList[index].comments}",
                                                 style: TextStyle(
                                                     color: CustomStyle
                                                         .colorPalette.textColor,

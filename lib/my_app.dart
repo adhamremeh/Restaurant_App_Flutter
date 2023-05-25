@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mat3ami/business_logic/view_models/employee_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/table_view_model.dart';
 import 'package:mat3ami/screens/Manger_View/DeafultViewScreen.dart';
+import 'package:mat3ami/screens/Manger_View/Employees/Employee_Screen.dart';
 import 'package:mat3ami/screens/common_components/custom_order_details.dart';
 import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
 import 'package:mat3ami/screens/playGround.dart';
@@ -24,7 +26,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => OrderViewModel(),
-        )
+        ),
+        ChangeNotifierProvider(create: (context) => EmployeeViewModel())
       ],
       child: MaterialApp(
         home: DeafultViewScreen(),

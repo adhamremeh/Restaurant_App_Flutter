@@ -6,9 +6,9 @@ class EmployeeViewModel extends ChangeNotifier {
   List<Employee> employeeList = [];
 
   EmployeeViewModel() {
-    updateOrderList();
+    updateEmployeeList();
   }
-  Future<void> updateOrderList() async {
+  Future<void> updateEmployeeList() async {
     employeeList = (await EmployeeServices.fetchAllEmlpoyeesFromDatabase())
         .cast<Employee>();
     notifyListeners();
