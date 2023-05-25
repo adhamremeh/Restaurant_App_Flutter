@@ -5,6 +5,7 @@ import 'package:mat3ami/business_logic/models/employee.dart';
 import 'package:mat3ami/business_logic/view_models/active_user_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/employee_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
+import 'package:mat3ami/screens/Manger_View/Employees/Hire_Employee.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
@@ -91,8 +92,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                               trailing: customButton(
                                   context: context,
                                   onPressed: () {
-                                    //Navigate to edit employee
-                                    print(employeesList.length);
+                                    //Navigate to edit
                                   },
                                   childText: "Edit",
                                   width:
@@ -120,7 +120,11 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                       width: MediaQuery.of(context).size.width * 0.7044,
                       context: context,
                       onPressed: () {
-                        //Navigate to Hire screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HireEmployeeScreen()),
+                        );
                       },
                       childText: "Hire Employee"),
                   SizedBox(

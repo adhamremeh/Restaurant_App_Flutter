@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mat3ami/screens/Manger_View/Employees/Employee_Screen.dart';
+import 'package:mat3ami/screens/Manger_View/Orders_History/Orders_History.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 
 import '../../style/style.dart';
@@ -66,9 +67,7 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
         Container(
             child: Text("Menu",
                 style: TextStyle(fontSize: 20.0, color: Colors.white))),
-        Container(
-            child: Text("Orders",
-                style: TextStyle(fontSize: 20.0, color: Colors.white)))
+        OrdersHistory()
       ]),
     );
   }
