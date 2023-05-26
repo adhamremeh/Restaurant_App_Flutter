@@ -1,36 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
 class MenuItem {
   String name;
-  int managerSsn;
   double price;
   String category;
   bool availability;
   String description;
-  Image image;
+  String? imageBytes;
   MenuItem(
       {required this.name,
-      required this.managerSsn,
       required this.price,
       required this.category,
       required this.availability,
       required this.description,
-      required this.image});
+      required this.imageBytes});
   // Results
   MenuItem.fromDatabase(ResultRow result)
       : name = result['name'],
-        managerSsn = result['managerSsn'] as int,
         price = result['price'] as double,
         category = result['category'],
         availability = result['availability'] as int == 0 ? false : true,
         description = result['description'],
-        image = Image.memory(Uint8List.fromList(result['image'].toBytes()));
+        imageBytes = result['image'].toString();
+
+  static Image decodeImage(String imageBytes) {
+    return Image.memory(Base64Decoder().convert(imageBytes));
+  }
 
   @override
   String toString() {
     // TODO: implement toString
-    return '$name , $managerSsn , $price , $category , $availability , $description , $image';
+    return '$name , $price , $category , $availability , $description ';
   }
 }

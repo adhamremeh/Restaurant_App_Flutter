@@ -15,6 +15,6 @@ class MenuViewModel extends ChangeNotifier {
 
   Future<void> addNewMenuItem(m.MenuItem item) async {
     await MenuItemServices.addNewMenuItemToDatabase(item);
-    await updateMenuList();
+    // await updateMenuList();
   }
 }

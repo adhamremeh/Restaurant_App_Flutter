@@ -85,14 +85,14 @@ Widget customTextField(
     Icon? icon}) {
   return SizedBox(
     width: width,
-    height: height,
     child: TextField(
+      maxLines: null,
       controller: textEditingController,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
           isCollapsed: true,
-          contentPadding: EdgeInsets.symmetric(vertical: height),
-          // contentPadding: EdgeInsets.symmetric(vertical: height),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: height, horizontal: 20),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
               borderSide: BorderSide(
@@ -108,6 +108,7 @@ Widget customTextField(
           ),
           fillColor: CustomStyle.colorPalette.textFieldColor,
           filled: true,
+          hintMaxLines: null,
           hintText: hintText,
           hintStyle: TextStyle(
               color: CustomStyle.colorPalette.textColor,
