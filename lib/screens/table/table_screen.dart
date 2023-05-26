@@ -17,7 +17,7 @@ class TablesScreen extends StatefulWidget {
 
 class _TablesScreenState extends State<TablesScreen> {
   int _selectedBoxIndex = -1;
-  late List<OrdersList> tableList;
+  late List<TableInRestaurant> tableList;
 
   void _onBoxPressed(int index) {
     setState(() {

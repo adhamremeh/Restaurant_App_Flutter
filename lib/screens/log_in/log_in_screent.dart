@@ -18,7 +18,7 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   int _selectedBoxIndex = -1;
-  late List<OrdersList> tableList;
+  late List<Table> tableList;
 
   final TextEditingController _UserNameinputTEXT = TextEditingController();
   final TextEditingController _PasswordinputTEXT = TextEditingController();

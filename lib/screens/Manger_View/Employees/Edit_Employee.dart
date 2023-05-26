@@ -11,7 +11,6 @@ import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
-
 class EditEmployeeScreen extends StatefulWidget {
   const EditEmployeeScreen({Key? key}) : super(key: key);
 
@@ -20,7 +19,6 @@ class EditEmployeeScreen extends StatefulWidget {
 }
 
 class _EditEmployeeState extends State<EditEmployeeScreen> {
-
   final TextEditingController _FirstNameinputTEXT = TextEditingController();
   final TextEditingController _LastNameinputTEXT = TextEditingController();
   final TextEditingController _PasswordinputTEXT = TextEditingController();
@@ -43,23 +41,22 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
     int ssn = int.parse(_EmployeeSSNinputTEXT.text);
 
     Map<String, String> userMap = {
-        "fName": _FirstNameinputTEXT.text
-      , "lName": _LastNameinputTEXT.text
-      , "employeeRole": dropdownValue
-      , "password": _PasswordinputTEXT.text
-      , "salary": _SalaryinputTEXT.text
+      "fName": _FirstNameinputTEXT.text,
+      "lName": _LastNameinputTEXT.text,
+      "employeeRole": dropdownValue,
+      "password": _PasswordinputTEXT.text,
+      "salary": _SalaryinputTEXT.text
     };
 
-    EmployeeServices.updateEmployeeFromDatabase(userMap, ssn);
+    //EmployeeServices.updateEmployeeFromDatabase(userMap, ssn);
   }
 
   Future<void> FireButton() async {
-    EmployeeServices.deleteEmployeeFromDatabase(int.parse(_EmployeeSSNinputTEXT.text));
+    // EmployeeServices.deleteEmployeeFromDatabase(int.parse(_EmployeeSSNinputTEXT.text));
   }
 
   @override
   Widget build(BuildContext context) {
-
     return customScaffold(
       title: "Edit Employee",
       context: context,
@@ -117,31 +114,43 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Choose employee role:", style: TextStyle(fontSize: CustomStyle.fontSizes.textFieldFont, color: CustomStyle.colorPalette.textColor),),
+                Text(
+                  "Choose employee role:",
+                  style: TextStyle(
+                      fontSize: CustomStyle.fontSizes.textFieldFont,
+                      color: CustomStyle.colorPalette.textColor),
+                ),
                 SizedBox(width: 40),
                 Container(
                   width: 80,
                   height: 40,
-                  decoration: BoxDecoration(boxShadow: [BoxShadow(color: CustomStyle.colorPalette.orangeShadow.withOpacity(0.5)
-                      , spreadRadius: 1
-                      , blurRadius: 5
-                      , offset: Offset(0, 3))]
-                  , borderRadius: BorderRadius.circular(10)
-                  , color: CustomStyle.colorPalette.orange),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: CustomStyle.colorPalette.orangeShadow
+                                .withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 3))
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                      color: CustomStyle.colorPalette.orange),
                   child: DropdownButton<String>(
                     dropdownColor: CustomStyle.colorPalette.orange,
                     value: dropdownValue.isNotEmpty ? dropdownValue : null,
-                    items: <String>['Cheif', 'Waiter'].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['Cheif', 'Waiter']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                           value: value,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               value,
-                              style: TextStyle(fontSize: 10, color: CustomStyle.colorPalette.textColor),
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  color: CustomStyle.colorPalette.textColor),
                             ),
-                          )
-                      );
+                          ));
                     }).toList(),
                     onChanged: (String? newValue) {
                       setState(() {
@@ -152,7 +161,6 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
                 ),
               ],
             ),
-
             SizedBox(height: 30),
             customButton(
                 context: context,
@@ -174,4 +182,3 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
     );
   }
 }
-

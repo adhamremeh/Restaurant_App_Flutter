@@ -11,6 +11,15 @@ class Order {
   double total = 0.0;
   int tableNum;
 
+  List<String> _sortedStates = [
+    'Placed',
+    'Ready',
+    'Preparing',
+    'Served',
+    'Completed',
+    'Cancelled'
+  ];
+
   get getTotal => this.total;
 
   get allItemsAndCounts => null;
@@ -46,6 +55,18 @@ class Order {
         orderStatus: orderStatus,
         menuItemsNamesAndCounts: menuItemsNamesAndCounts,
         tableNum: tableNum);
+  }
+
+  int compareTo(Order other) {
+    if (_sortedStates.indexOf(orderStatus) <
+        _sortedStates.indexOf(other.orderStatus)) {
+      return -1;
+    } else if (_sortedStates.indexOf(orderStatus) >
+        _sortedStates.indexOf(other.orderStatus)) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   @override

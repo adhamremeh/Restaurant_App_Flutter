@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
 import 'package:mat3ami/business_logic/services/order_services.dart';
+import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
 import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
 import 'package:mat3ami/style/style.dart';
+import 'package:provider/provider.dart';
 
 Container customContainer(
     {required Widget child, double? width, double? height}) {
@@ -84,37 +86,37 @@ Widget customTextField(
   return SizedBox(
     width: width,
     height: height,
-    child: Container(
-      child: TextField(
-        controller: textEditingController,
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-            // contentPadding: EdgeInsets.symmetric(vertical: height),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                borderSide: BorderSide(
-                  color: CustomStyle.colorPalette.textFieldColor,
-                )),
-            focusedBorder: OutlineInputBorder(
+    child: TextField(
+      controller: textEditingController,
+      style: TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+          isCollapsed: true,
+          contentPadding: EdgeInsets.symmetric(vertical: height),
+          // contentPadding: EdgeInsets.symmetric(vertical: height),
+          border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
               borderSide: BorderSide(
-                width: 2.0,
-                color: CustomStyle
-                    .colorPalette.orange, // Sets the border color when focused
-              ),
+                color: CustomStyle.colorPalette.textFieldColor,
+              )),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide: BorderSide(
+              width: 2.0,
+              color: CustomStyle
+                  .colorPalette.orange, // Sets the border color when focused
             ),
-            fillColor: CustomStyle.colorPalette.textFieldColor,
-            filled: true,
-            hintText: hintText,
-            hintStyle: TextStyle(
-                color: CustomStyle.colorPalette.textColor,
-                fontFamily: CustomStyle.fontFamily,
-                fontSize: CustomStyle.fontSizes.dropDownMenu,
-                fontWeight: FontWeight.w200),
-            icon: icon,
-            iconColor: CustomStyle.colorPalette.textColor),
-        cursorColor: CustomStyle.colorPalette.darkBackground,
-      ),
+          ),
+          fillColor: CustomStyle.colorPalette.textFieldColor,
+          filled: true,
+          hintText: hintText,
+          hintStyle: TextStyle(
+              color: CustomStyle.colorPalette.textColor,
+              fontFamily: CustomStyle.fontFamily,
+              fontSize: CustomStyle.fontSizes.dropDownMenu,
+              fontWeight: FontWeight.w200),
+          icon: icon,
+          iconColor: CustomStyle.colorPalette.textColor),
+      cursorColor: CustomStyle.colorPalette.darkBackground,
     ),
   );
 }
@@ -199,8 +201,8 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           setState(() {
             widget.selectedOption = newValue!;
             widget.order.orderStatus = widget.selectedOption;
-            OrderServices.modifyOrderStatusInDatabase(
-                widget.order.orderId, newValue);
+            Provider.of<OrderViewModel>(context, listen: false)
+                .updateOrderStatus(widget.order.orderId, newValue);
           });
         },
         icon: Icon(

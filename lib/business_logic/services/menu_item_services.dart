@@ -5,10 +5,9 @@ import '../models/menu_item.dart';
 
 class MenuItemServices {
   // add new item to menue
-  static Future<void> addNewMenuItemToDatabase(
-      MenuItem item, int managerSsn) async {
+  static Future<void> addNewMenuItemToDatabase(MenuItem item) async {
     final query =
-        "insert into menuItem values('${item.name}' , ${item.price} , '${item.category}' , ${item.image} , ${item.availability},'${item.description}', $managerSsn);";
+        "insert into menuItem values('${item.name}' , ${item.price} , '${item.category}' , ${item.image} , ${item.availability},'${item.description}');";
     await DatabaseServices.queryDatabase(query);
   }
 
@@ -38,10 +37,9 @@ class MenuItemServices {
   }
 
 // Edit Item from menu items
-  static Future<void> editMenuItemInDatabase(
-      MenuItem item, int managerSsn) async {
+  static Future<void> editMenuItemInDatabase(MenuItem item) async {
     final query =
-        "UPDATE menuItem SET name = '${item.name}', price = ${item.price},category = '${item.category}',image = ${item.image},availability = ${item.availability},description = '${item.description}' , managerSsn = $managerSsn where name= '${item.name}';";
+        "UPDATE menuItem SET name = '${item.name}', price = ${item.price},category = '${item.category}',image = ${item.image},availability = ${item.availability},description = '${item.description}' where name= '${item.name}';";
     await DatabaseServices.queryDatabase(query);
   }
 }
