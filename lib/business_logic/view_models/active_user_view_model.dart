@@ -4,7 +4,7 @@ import 'package:mysql1/mysql1.dart';
 
 class ActiveUserViewModel extends ChangeNotifier {
   //attributes
-  static String id = '';
+  static int id = -1;
   static String name = '';
   static String role = '';
 
@@ -24,7 +24,7 @@ class ActiveUserViewModel extends ChangeNotifier {
   //setting current Active User of the application
 
   void setActiveUser(ResultRow result) {
-    id = result['ssn'].toString();
+    id = result['ssn'];
     name = result['fName'] + ' ' + result['lName'];
     role = result['employeeRole']; //'employee' or 'manager'
     notifyListeners();

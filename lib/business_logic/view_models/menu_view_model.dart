@@ -13,6 +13,16 @@ class MenuViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateMenuItem(m.MenuItem item) async {
+    await MenuItemServices.editMenuItemInDatabase(item);
+    await updateMenuList();
+  }
+
+  Future<void> deleteMenuItem(m.MenuItem item) async {
+    await MenuItemServices.deleteMenuItemFromDatabase(item.name);
+    await updateMenuList();
+  }
+
   Future<void> addNewMenuItem(m.MenuItem item) async {
     await MenuItemServices.addNewMenuItemToDatabase(item);
     await updateMenuList();

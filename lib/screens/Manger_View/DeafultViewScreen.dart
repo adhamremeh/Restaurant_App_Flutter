@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mat3ami/screens/Manger_View/Employees/Employee_Screen.dart';
+import 'package:mat3ami/screens/Manger_View/Employees/employee_screen.dart';
 import 'package:mat3ami/screens/Manger_View/Orders_History/Orders_History.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 

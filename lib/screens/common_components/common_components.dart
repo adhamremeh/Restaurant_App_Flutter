@@ -7,7 +7,7 @@ import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
 Container customContainer(
-    {required Widget child, double? width, double? height}) {
+    {required Widget child, double? width, double? height, Color? color}) {
   return Container(
     width: width,
     height: height,
@@ -21,7 +21,7 @@ Container customContainer(
             offset: const Offset(0, 3),
           )
         ],
-        color: CustomStyle.colorPalette.darkBackground)),
+        color: color ?? CustomStyle.colorPalette.darkBackground)),
     child: child,
   );
 }

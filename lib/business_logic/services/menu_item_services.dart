@@ -30,16 +30,15 @@ class MenuItemServices {
   }
 
 // Delete menu items
-  static Future<MenuItem> deleteMenuItemFromDatabase(String name) async {
+  static Future<void> deleteMenuItemFromDatabase(String name) async {
     final query = "DELETE FROM menuItem where name = '$name';";
-    final result = await DatabaseServices.queryDatabase(query);
-    return MenuItem.fromDatabase(result.first);
+    await DatabaseServices.queryDatabase(query);
   }
 
 // Edit Item from menu items
   static Future<void> editMenuItemInDatabase(MenuItem item) async {
     final query =
-        "UPDATE menuItem SET name = '${item.name}', price = ${item.price},category = '${item.category}',image = ${item.imageBytes},availability = ${item.availability},description = '${item.description}' where name= '${item.name}';";
+        "UPDATE menuItem SET name = '${item.name}', price = ${item.price},category = '${item.category}',image = '${item.imageBytes}',availability = ${item.availability},description = '${item.description}' where name= '${item.name}';";
     await DatabaseServices.queryDatabase(query);
   }
 }

@@ -61,7 +61,7 @@ class EmployeeServices {
         final query3 = "Delete from employeePhone where ssn=${employee.ssn}";
         await DatabaseServices.queryDatabase(query3);
 
-        for (int i = 0; i <= numberOfPhones; i++) {
+        for (int i = 0; i < numberOfPhones; i++) {
           final query2 =
               "Insert into employeePhone (phoneNumber,ssn) Values ('${employee.phone[i]}', ${employee.ssn});";
           await DatabaseServices.queryDatabase(query2);

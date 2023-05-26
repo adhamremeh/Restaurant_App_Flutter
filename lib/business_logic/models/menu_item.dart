@@ -27,8 +27,8 @@ class MenuItem {
         description = result['description'],
         imageBytes = result['image'].toString();
 
-  static Image decodeImage(String imageBytes) {
-    return Image.memory(Base64Decoder().convert(imageBytes));
+  Image decodeImage() {
+    return Image.memory(Base64Decoder().convert(this.imageBytes!));
   }
 
   @override

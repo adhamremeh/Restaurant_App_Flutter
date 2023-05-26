@@ -1,45 +1,39 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mat3ami/business_logic/models/employee.dart';
-import 'package:mat3ami/business_logic/models/menu_item.dart' as m;
-import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
-import 'package:mat3ami/business_logic/services/employee_services.dart';
 import 'package:mat3ami/business_logic/view_models/active_user_view_model.dart';
-import 'package:mat3ami/business_logic/view_models/menu_view_model.dart';
-import 'package:mat3ami/screens/common_components/combo_box.dart';
+
+import 'package:mat3ami/business_logic/view_models/employee_view_model.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
-class AddMenuItemScreen extends StatefulWidget {
-  const AddMenuItemScreen({Key? key}) : super(key: key);
-
+class HireEmployeeScreen extends StatefulWidget {
+  const HireEmployeeScreen({
+    Key? key,
+  }) : super(key: key);
   @override
-  _AddMenuItemScreenState createState() => _AddMenuItemScreenState();
+  _HireEmployeeScreenState createState() => _HireEmployeeScreenState();
 }
 
-class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
-  final TextEditingController _ItemNameInputText = TextEditingController();
-  final TextEditingController _ItemDescriptionInputText =
-      TextEditingController();
-  final TextEditingController _ItemPriceInputText = TextEditingController();
-  final TextEditingController _categoryInputText = TextEditingController();
-
+class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
+  final TextEditingController _FirstNameinputTEXT = TextEditingController();
+  final TextEditingController _LastNameinputTEXT = TextEditingController();
+  final TextEditingController _PasswordinputTEXT = TextEditingController();
+  final TextEditingController _FirstPhoneinputTEXT = TextEditingController();
+  final TextEditingController _SecondPhoneinputTEXT = TextEditingController();
+  final TextEditingController _SalaryinputTEXT = TextEditingController();
   String dropdownValue = '';
-  List<String> categoryList = ['Dessert', 'Koshary', 'Drinks', 'Additions'];
-  String? imageBytes;
+  List<String> employeeRoles = ['Waiter', 'Kitchen'];
 
   @override
   void initState() {
     // TODO: implement initState
   }
 
-  Future<void> saveMenuItem() async {
-    bool valid = validateTextFields();
-    if (valid) {
+  Future<void> hireEmployee() async {
+    if (validateTextFields()) {
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -54,17 +48,31 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
           );
         },
       );
-      await Provider.of<MenuViewModel>(context, listen: false).addNewMenuItem(
-          m.MenuItem(
-              name: _ItemNameInputText.text,
-              price: double.parse(_ItemPriceInputText.text),
-              availability: true,
-              category: _categoryInputText.text,
-              description: _ItemDescriptionInputText.text,
-              imageBytes: this.imageBytes));
+      List<String> phoneNumbers = [];
+      if (_FirstPhoneinputTEXT.text != null &&
+          _FirstPhoneinputTEXT.text.length >= 11) {
+        phoneNumbers.add(_FirstPhoneinputTEXT.text);
+      }
+      if (_SecondPhoneinputTEXT.text != null &&
+          _SecondPhoneinputTEXT.text.length >= 11) {
+        phoneNumbers.add(_SecondPhoneinputTEXT.text);
+      }
+      Employee employee = Employee(
+        ssn: -1,
+        managerSsn: ActiveUserViewModel.id,
+        employeeRole: dropdownValue,
+        fName: _FirstNameinputTEXT.text,
+        lName: _LastNameinputTEXT.text,
+        password: _PasswordinputTEXT.text,
+        salary: double.parse(_SalaryinputTEXT.text),
+        phone: phoneNumbers,
+      );
+
+      await Provider.of<EmployeeViewModel>(context, listen: false)
+          .addEmployee(employee);
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Item added succsefuly')));
+          .showSnackBar(SnackBar(content: Text('Employee Edited succsefuly')));
       Navigator.of(context, rootNavigator: true).pop();
     }
   }
@@ -72,7 +80,7 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
   @override
   Widget build(BuildContext context) {
     return customScaffold(
-      title: "Add Menu Item",
+      title: "Hire Employee",
       context: context,
       body: SingleChildScrollView(
         child: Column(
@@ -81,29 +89,58 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.025,
             ),
-            customTextField(
-                width: MediaQuery.of(context).size.width * 0.87,
-                height: MediaQuery.of(context).size.height * 0.036,
-                hintText: " Item Name",
-                textEditingController: _ItemNameInputText),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                customTextField(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.036,
+                    hintText: "First Name",
+                    textEditingController: _FirstNameinputTEXT),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.07,
+                ),
+                customTextField(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.036,
+                    hintText: "Last Name",
+                    textEditingController: _LastNameinputTEXT),
+              ],
+            ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
                 width: MediaQuery.of(context).size.width * 0.87,
                 height: MediaQuery.of(context).size.height * 0.036,
-                hintText: " Item Description",
-                textEditingController: _ItemDescriptionInputText),
+                hintText: "Password",
+                textEditingController: _PasswordinputTEXT),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
-                width: MediaQuery.of(context).size.width * 0.87,
+                width: MediaQuery.of(context).size.width / 1.15,
                 height: MediaQuery.of(context).size.height * 0.036,
-                hintText: "Item Price",
-                textEditingController: _ItemPriceInputText),
+                hintText: "First Phone Number",
+                textEditingController: _FirstPhoneinputTEXT),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            customTextField(
+                width: MediaQuery.of(context).size.width / 1.15,
+                height: MediaQuery.of(context).size.height * 0.036,
+                hintText: "Second Phone Number",
+                textEditingController: _SecondPhoneinputTEXT),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            customTextField(
+                width: MediaQuery.of(context).size.width / 1.15,
+                height: MediaQuery.of(context).size.height * 0.036,
+                hintText: "Salary",
+                textEditingController: _SalaryinputTEXT),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.87,
@@ -111,7 +148,7 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "Select Category:",
+                    "Select Role:",
                     style: TextStyle(
                         fontFamily: CustomStyle.fontFamily,
                         fontSize: CustomStyle.fontSizes.textFieldFont,
@@ -152,8 +189,15 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
                         underline: SizedBox(),
                         alignment: Alignment.center,
                         dropdownColor: CustomStyle.colorPalette.orange,
+                        hint: Text(
+                          dropdownValue,
+                          style: TextStyle(
+                              fontFamily: CustomStyle.fontFamily,
+                              fontSize: CustomStyle.fontSizes.dropDownMenu,
+                              color: CustomStyle.colorPalette.textColor),
+                        ),
                         value: dropdownValue.isNotEmpty ? dropdownValue : null,
-                        items: categoryList
+                        items: employeeRoles
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                               value: value,
@@ -173,7 +217,6 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
                         onChanged: (String? newValue) {
                           setState(() {
                             dropdownValue = newValue!;
-                            _categoryInputText.text = dropdownValue;
                           });
                         },
                       ),
@@ -183,47 +226,13 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-            ),
-            SizedBox(
-              //width: MediaQuery.of(context).size.width * 0.87,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    "Upload image:",
-                    style: TextStyle(
-                        fontFamily: CustomStyle.fontFamily,
-                        fontSize: CustomStyle.fontSizes.textFieldFont,
-                        color: CustomStyle.colorPalette.textColor),
-                  ),
-                  customButton(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      height: 45,
-                      context: context,
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Pick an image.
-                        XFile? image =
-                            await picker.pickImage(source: ImageSource.gallery);
-                        if (image != null) {
-                          List<int> bytes = await image.readAsBytes();
-                          imageBytes = base64Encode(bytes);
-                        }
-                      },
-                      childText: (imageBytes == null) ? 'upload' : 'Change')
-                ],
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             customButton(
               context: context,
-              onPressed: saveMenuItem,
-              childText: "Save",
-            )
+              onPressed: hireEmployee,
+              childText: "Hire",
+            ),
           ],
         ),
       ),
@@ -232,28 +241,31 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
 
   bool validateTextFields() {
     bool allValid = true;
-    if (_ItemNameInputText.text == '') {
-      _ItemNameInputText.text = 'Please Enter a valid name';
+    if (_FirstNameinputTEXT.text == '') {
+      _FirstNameinputTEXT.text = 'Please Enter a First name';
       allValid = false;
     }
-    if (_ItemDescriptionInputText.text.length < 10) {
-      _ItemDescriptionInputText.text = 'Please Enter a Item Description';
+    if (_LastNameinputTEXT.text == '') {
+      _LastNameinputTEXT.text = 'Please Enter a last Name';
       allValid = false;
     }
-    if (double.tryParse(_ItemPriceInputText.text) == null) {
-      _ItemPriceInputText.text = 'Please Enter a valid Price';
-      allValid = false;
-    }
-    if (_categoryInputText.text == '') {
-      _categoryInputText.text = 'Please Select a valid Category';
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(_categoryInputText.text)));
+    if (_FirstPhoneinputTEXT.text.length < 11 &&
+        _SecondPhoneinputTEXT.text.length < 11) {
+      _FirstPhoneinputTEXT.text = 'Please Enter at least 1 valid phoneNumber';
+      _SecondPhoneinputTEXT.text = '';
       allValid = false;
     }
 
-    if (imageBytes == null) {
-      final temp = 'Please Select a valid Image';
+    if (_PasswordinputTEXT.text == '' || _PasswordinputTEXT.text.length < 12) {
+      _PasswordinputTEXT.text = 'Please Enter a Valid Password';
+      allValid = false;
+    }
+    if (double.tryParse(_SalaryinputTEXT.text) == null) {
+      _SalaryinputTEXT.text = 'Please Enter a valid Salary';
+      allValid = false;
+    }
+    if (dropdownValue == '') {
+      final temp = 'Please Select a valid Role';
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(temp)));
       allValid = false;

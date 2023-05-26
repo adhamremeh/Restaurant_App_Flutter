@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mat3ami/business_logic/models/employee.dart';
+
 import 'package:mat3ami/business_logic/models/menu_item.dart' as m;
 import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/services/employee_services.dart';
@@ -14,14 +14,14 @@ import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
-class AddMenuItemScreen extends StatefulWidget {
-  const AddMenuItemScreen({Key? key}) : super(key: key);
-
+class EditMenuItemScreen extends StatefulWidget {
+  EditMenuItemScreen({Key? key, required this.item}) : super(key: key);
+  m.MenuItem item;
   @override
-  _AddMenuItemScreenState createState() => _AddMenuItemScreenState();
+  _EditMenuItemScreenState createState() => _EditMenuItemScreenState();
 }
 
-class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
+class _EditMenuItemScreenState extends State<EditMenuItemScreen> {
   final TextEditingController _ItemNameInputText = TextEditingController();
   final TextEditingController _ItemDescriptionInputText =
       TextEditingController();
@@ -35,9 +35,14 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    _ItemDescriptionInputText.text = widget.item.description;
+    _ItemNameInputText.text = widget.item.name;
+    _ItemPriceInputText.text = widget.item.price.toString();
+    _categoryInputText.text = widget.item.category;
+    dropdownValue = widget.item.category;
   }
 
-  Future<void> saveMenuItem() async {
+  Future<void> editMenuItem() async {
     bool valid = validateTextFields();
     if (valid) {
       showDialog(
@@ -54,7 +59,7 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
           );
         },
       );
-      await Provider.of<MenuViewModel>(context, listen: false).addNewMenuItem(
+      await Provider.of<MenuViewModel>(context, listen: false).updateMenuItem(
           m.MenuItem(
               name: _ItemNameInputText.text,
               price: double.parse(_ItemPriceInputText.text),
@@ -64,15 +69,38 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
               imageBytes: this.imageBytes));
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Item added succsefuly')));
+          .showSnackBar(SnackBar(content: Text('Item updated succsefuly')));
       Navigator.of(context, rootNavigator: true).pop();
     }
+  }
+
+  Future<void> deleteMenuItem() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Container(
+          color: CustomStyle.colorPalette.lightBackgorund,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: CustomStyle.colorPalette.orange,
+            ),
+          ),
+        );
+      },
+    );
+    await Provider.of<MenuViewModel>(context, listen: false)
+        .deleteMenuItem(widget.item);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Item Deleted succsefuly')));
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return customScaffold(
-      title: "Add Menu Item",
+      title: "Edit Menu Item",
       context: context,
       body: SingleChildScrollView(
         child: Column(
@@ -81,11 +109,20 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.025,
             ),
-            customTextField(
-                width: MediaQuery.of(context).size.width * 0.87,
-                height: MediaQuery.of(context).size.height * 0.036,
-                hintText: " Item Name",
-                textEditingController: _ItemNameInputText),
+            customContainer(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: MediaQuery.of(context).size.height * 0.05,
+              color: CustomStyle.colorPalette.textFieldColor,
+              child: Center(
+                child: Text(
+                  "${widget.item.name}",
+                  style: TextStyle(
+                      fontFamily: CustomStyle.fontFamily,
+                      fontSize: CustomStyle.fontSizes.textFieldFont,
+                      color: CustomStyle.colorPalette.textColor),
+                ),
+              ),
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),
@@ -212,7 +249,9 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
                           imageBytes = base64Encode(bytes);
                         }
                       },
-                      childText: (imageBytes == null) ? 'upload' : 'Change')
+                      childText: (widget.item.imageBytes == null)
+                          ? 'Upload'
+                          : 'Change')
                 ],
               ),
             ),
@@ -221,8 +260,17 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
             ),
             customButton(
               context: context,
-              onPressed: saveMenuItem,
-              childText: "Save",
+              onPressed: editMenuItem,
+              childText: "Edit",
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+            customButton(
+              color: CustomStyle.colorPalette.red,
+              context: context,
+              onPressed: deleteMenuItem,
+              childText: "Delete",
             )
           ],
         ),
