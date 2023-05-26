@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EmployeeViewModel())
       ],
       child: MaterialApp(
-        home: AddMenuItemScreen(),
+        home: DeafultViewScreen(),
       ),
     );
   }

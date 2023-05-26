@@ -38,14 +38,14 @@ class _HireEmployeeState extends State<HireEmployeeScreen> {
     String managerSSN = ActiveUserViewModel.id;
     Employee newUser = Employee(
         ssn: -1,
-        managerSsn: int.parse(managerSSN),
+        managerSsn: 2,
         fName: _FirstNameinputTEXT.text,
         lName: _LastNameinputTEXT.text,
         employeeRole: dropdownValue,
         password: _PasswordinputTEXT.text,
         phone: [_FirstPhoneinputTEXT.text, _SecondPhoneinputTEXT.text],
         salary: double.parse(_SalaryinputTEXT.text));
-    EmployeeServices.addNewEmployeeToDatabase(newUser, int.parse(managerSSN));
+    EmployeeServices.addNewEmployeeToDatabase(newUser, 2);
   }
 
   @override

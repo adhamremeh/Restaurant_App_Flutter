@@ -12,7 +12,7 @@ class EmployeeServices {
     await DatabaseServices.queryDatabase(empQuery);
     for (String phone in user.phone) {
       String empPhoneQueuery =
-          "insert into employeePhone(ssn , phoneNumber) values(${user.ssn} , $phone);";
+          "insert into employeePhone (ssn , phoneNumber) values((select  max(ssn) from employee ) , '$phone');";
       DatabaseServices.queryDatabase(empPhoneQueuery);
     }
   }
@@ -20,7 +20,7 @@ class EmployeeServices {
 //delete  employee
   static Future<void> deleteEmployeeFromDatabase(Employee user) async {
     final String deleteQueuery =
-        "delete from employee where orderId = ${user.ssn};";
+        "delete from employee where ssn = ${user.ssn};";
     await DatabaseServices.queryDatabase(deleteQueuery);
   }
 
@@ -42,5 +42,31 @@ class EmployeeServices {
       employeeList.add(Employee.fromDatabase(emp));
     }
     return employeeList;
+  }
+
+  static Future<void> editEmployeeInDatabase(Employee employee) async {
+    final query1 =
+        "UPDATE employee SET password = '${employee.password}', salary = ${employee.salary},fName = '${employee.fName}',lName = '${employee.lName}',employeeRole = '${employee.employeeRole}' where ssn= ${employee.ssn};";
+    await DatabaseServices.queryDatabase(query1);
+
+    int numberOfPhones = employee.phone.length;
+    if (numberOfPhones == 0) {
+      return;
+    } else {
+      if (numberOfPhones == 1) {
+        final query2 =
+            "UPDATE employeePhone SET phoneNumber = '${employee.phone[0]}' where ssn= ${employee.ssn};";
+        await DatabaseServices.queryDatabase(query2);
+      } else {
+        final query3 = "Delete from employeePhone where ssn=${employee.ssn}";
+        await DatabaseServices.queryDatabase(query3);
+
+        for (int i = 0; i <= numberOfPhones; i++) {
+          final query2 =
+              "Insert into employeePhone (phoneNumber,ssn) Values ('${employee.phone[i]}', ${employee.ssn});";
+          await DatabaseServices.queryDatabase(query2);
+        }
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:mat3ami/business_logic/models/employee.dart';
 import 'package:mat3ami/business_logic/view_models/active_user_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/employee_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
+import 'package:mat3ami/screens/Manger_View/Employees/Edit_Employee.dart';
 import 'package:mat3ami/screens/Manger_View/Employees/Hire_Employee.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
@@ -93,6 +94,14 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                                   context: context,
                                   onPressed: () {
                                     //Navigate to edit
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditEmployeeScreen(
+                                                employee: employeesList[index],
+                                              )),
+                                    );
                                   },
                                   childText: "Edit",
                                   width:

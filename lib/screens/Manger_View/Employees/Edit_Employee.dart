@@ -5,6 +5,7 @@ import 'package:mat3ami/business_logic/models/employee.dart';
 import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/services/employee_services.dart';
 import 'package:mat3ami/business_logic/view_models/active_user_view_model.dart';
+import 'package:mat3ami/business_logic/view_models/employee_view_model.dart';
 import 'package:mat3ami/screens/common_components/combo_box.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
@@ -12,8 +13,9 @@ import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
 class EditEmployeeScreen extends StatefulWidget {
-  const EditEmployeeScreen({Key? key}) : super(key: key);
-
+  const EditEmployeeScreen({Key? key, required this.employee})
+      : super(key: key);
+  final Employee employee;
   @override
   _EditEmployeeState createState() => _EditEmployeeState();
 }
@@ -25,8 +27,6 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
   final TextEditingController _FirstPhoneinputTEXT = TextEditingController();
   final TextEditingController _SecondPhoneinputTEXT = TextEditingController();
   final TextEditingController _SalaryinputTEXT = TextEditingController();
-  final TextEditingController _EmployeeSSNinputTEXT = TextEditingController();
-
   String dropdownValue = '';
 
   final double customPadding = 15;
@@ -38,21 +38,32 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
   }
 
   Future<void> EditButton() async {
-    int ssn = int.parse(_EmployeeSSNinputTEXT.text);
-
-    Map<String, String> userMap = {
+    int ssn = widget.employee.ssn;
+    List<String> phoneNumbers = [];
+    if (_FirstPhoneinputTEXT.text != null &&
+        _FirstPhoneinputTEXT.text.length >= 11) {
+      phoneNumbers.add(_FirstPhoneinputTEXT as String);
+    }
+    if (_SecondPhoneinputTEXT.text != null &&
+        _SecondPhoneinputTEXT.text.length >= 11) {
+      phoneNumbers.add(_SecondPhoneinputTEXT as String);
+    }
+    Map<String, dynamic> userMap = {
       "fName": _FirstNameinputTEXT.text,
       "lName": _LastNameinputTEXT.text,
       "employeeRole": dropdownValue,
       "password": _PasswordinputTEXT.text,
-      "salary": _SalaryinputTEXT.text
+      "salary": _SalaryinputTEXT.text,
+      "Phone": phoneNumbers
     };
 
-    //EmployeeServices.updateEmployeeFromDatabase(userMap, ssn);
+    Provider.of<EmployeeViewModel>(context, listen: false)
+        .EmployeeUpdate(widget.employee);
   }
 
   Future<void> FireButton() async {
-    // EmployeeServices.deleteEmployeeFromDatabase(int.parse(_EmployeeSSNinputTEXT.text));
+    Provider.of<EmployeeViewModel>(context, listen: false)
+        .EmployeeDelete(widget.employee as Employee);
   }
 
   @override
@@ -78,12 +89,6 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
                     height: customHeight,
                     hintText: "Last Name",
                     textEditingController: _LastNameinputTEXT),
-                SizedBox(height: customPadding, width: 5),
-                customTextField(
-                    width: MediaQuery.of(context).size.width / 5,
-                    height: customHeight,
-                    hintText: "SSN",
-                    textEditingController: _EmployeeSSNinputTEXT),
               ],
             ),
             SizedBox(height: customPadding),
