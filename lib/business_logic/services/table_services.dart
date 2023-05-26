@@ -16,6 +16,13 @@ class TableServices {
     return TableInRestaurant.fromDatabase(result.first);
   }
 
+  // delete table
+  static Future<void> deleteTableFromDatabase(int num) async {
+    final query =
+        "DELETE FROM `dinningTable` WHERE `dinningTable`.`tableNumber` = $num;";
+    await DatabaseServices.queryDatabase(query);
+  }
+
   //fetch all Tables
   static Future<List<TableInRestaurant>> fetchAllTablesFromDatabase() async {
     const query = "select * from dinningTable;";

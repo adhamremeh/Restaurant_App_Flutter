@@ -4,11 +4,8 @@ import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 import 'package:mat3ami/style/style.dart';
 
 class AvailableTableKeeping extends StatelessWidget {
-  const AvailableTableKeeping({
-    super.key,
-    // required this.tableNumber
-  });
-  // final String tableNumber;
+  const AvailableTableKeeping({super.key, required this.tableNumber});
+  final int tableNumber;
   @override
   Widget build(BuildContext context) {
     return customScaffold(
@@ -23,7 +20,7 @@ class AvailableTableKeeping extends StatelessWidget {
                   width: 285,
                   child: Center(
                     child: Text(
-                      "1",
+                      "$tableNumber",
                       style: TextStyle(
                           fontSize: 60,
                           fontFamily: CustomStyle.fontFamily,

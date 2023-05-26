@@ -5,6 +5,8 @@ import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/view_models/table_view_model.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
+import 'package:mat3ami/screens/table_keeping_available/table_keeping_available.dart';
+import 'package:mat3ami/screens/table_keeping_available/table_keeping_occupied.dart';
 import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
@@ -60,19 +62,40 @@ class _TablesScreenState extends State<TablesScreen> {
               children: [
                 Expanded(
                   flex: 30,
-                  child: customContainer(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: Center(
-                      child: Text('${tableList[index].tableNum}',
-                          style: TextStyle(
-                            fontFamily: CustomStyle.fontFamily,
-                            fontSize: 50,
-                            color: (tableList[index].state.toLowerCase() ==
-                                    'available')
-                                ? CustomStyle.colorPalette.green
-                                : CustomStyle.colorPalette.orange,
-                          )),
+                  child: InkWell(
+                    onTap: () {
+                      //Navigate
+                      if (tableList[index].state.toLowerCase() == "available") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AvailableTableKeeping(
+                                    tableNumber: tableList[index].tableNum,
+                                  )),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OccupiedTableKeeping(
+                                  tableNumber: tableList[index].tableNum)),
+                        );
+                      }
+                    },
+                    child: customContainer(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      child: Center(
+                        child: Text('${tableList[index].tableNum}',
+                            style: TextStyle(
+                              fontFamily: CustomStyle.fontFamily,
+                              fontSize: 50,
+                              color: (tableList[index].state.toLowerCase() ==
+                                      'available')
+                                  ? CustomStyle.colorPalette.green
+                                  : CustomStyle.colorPalette.orange,
+                            )),
+                      ),
                     ),
                   ),
                 ),

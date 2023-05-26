@@ -12,4 +12,14 @@ class TableViewModel extends ChangeNotifier {
     tableList = await TableServices.fetchAllTablesFromDatabase();
     notifyListeners();
   }
+
+  Future<void> addNewTable() async {
+    await TableServices.addNewTableToDatabase();
+    updateTableList();
+  }
+
+  Future<void> deleteTable(int tableNum) async {
+    await TableServices.deleteTableFromDatabase(tableNum);
+    updateTableList();
+  }
 }

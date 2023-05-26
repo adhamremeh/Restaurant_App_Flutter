@@ -107,4 +107,11 @@ class OrderServices {
 
     return orderList;
   }
+
+  static Future<Order> fetchOrderForTableFromDatabase(int tableNum) async {
+    String query =
+        "SELECT comments, dateAndTime, orderId, orderStatus, tableNumber FROM orders WHERE orderStatus NOT IN ('Completed', 'Cancelled') AND tableNumber = ${tableNum};";
+    final result = await DatabaseServices.queryDatabase(query);
+    return Order.fromDatabase(result.first);
+  }
 }

@@ -5,7 +5,8 @@ import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 import 'package:mat3ami/style/style.dart';
 
 class OccupiedTableKeeping extends StatefulWidget {
-  const OccupiedTableKeeping({super.key});
+  const OccupiedTableKeeping({super.key, required this.tableNumber});
+  final int tableNumber;
 
   @override
   State<OccupiedTableKeeping> createState() => _OccupiedTableKeepingState();
@@ -28,7 +29,7 @@ class _OccupiedTableKeepingState extends State<OccupiedTableKeeping> {
                       width: 285,
                       child: Center(
                         child: Text(
-                          "1",
+                          "${widget.tableNumber}",
                           style: TextStyle(
                               fontSize: 60,
                               fontFamily: CustomStyle.fontFamily,
@@ -81,16 +82,6 @@ class _OccupiedTableKeepingState extends State<OccupiedTableKeeping> {
                     onPressed: () {},
                     height: MediaQuery.of(context).size.height * 0.0816,
                     childText: "Add to order",
-                    color: CustomStyle.colorPalette.orange,
-                    shadowColor: CustomStyle.colorPalette.orangeShadow),
-                SizedBox(
-                  height: 10.0,
-                ),
-                customButton(
-                    height: MediaQuery.of(context).size.height * 0.0816,
-                    context: context,
-                    onPressed: () {},
-                    childText: "Modify order",
                     color: CustomStyle.colorPalette.orange,
                     shadowColor: CustomStyle.colorPalette.orangeShadow),
                 SizedBox(

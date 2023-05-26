@@ -38,7 +38,9 @@ class _LogInScreenState extends State<LogInScreen> {
     if (await ActiveUserViewModel.logInUser(
         _UserNameinputTEXT.text, _PasswordinputTEXT.text)) {
       if (ActiveUserViewModel.role == 'Manager') {
+        //Navigate to deafult manger screen
       } else if (ActiveUserViewModel.role == 'Chief') {
+        //Navigate to orders screen
       } else if (ActiveUserViewModel.role == 'Waiter') {
         Navigator.push(
           context,
@@ -65,45 +67,58 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     List<int> tableList = [1, 2];
-    return Scaffold(
-      backgroundColor: CustomStyle.colorPalette.darkBackground,
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 5),
-            SizedBox(
-              height: 250,
-              width: 250,
-              child: Image.asset('assets/logo/logo-color.png'),
-            ),
-            customTextField(
-                width: MediaQuery.of(context).size.width / 1.6,
-                height: 45,
-                hintText: "User SSN",
-                textEditingController: _UserNameinputTEXT),
-            SizedBox(height: 10),
-            customTextField(
-                width: MediaQuery.of(context).size.width / 1.6,
-                height: 45,
-                hintText: "Password",
-                textEditingController: _PasswordinputTEXT),
-            SizedBox(height: 20),
-            customButton(
-                context: context,
-                onPressed: LogInButton,
-                childText: "Log In",
-                width: MediaQuery.of(context).size.width / 2,
-                height: 45)
-          ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: CustomStyle.colorPalette.darkBackground,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "LOG IN",
+                      style: TextStyle(
+                          fontSize: CustomStyle.fontSizes.titleFont + 8,
+                          color: CustomStyle.colorPalette.textColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 50),
+              SizedBox(
+                height: 350,
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset('assets/logo/logo-color.png'),
+              ),
+              customTextField(
+                  width: MediaQuery.of(context).size.width * 0.876,
+                  height: 25,
+                  hintText: "User SSN",
+                  textEditingController: _UserNameinputTEXT),
+              SizedBox(height: 10),
+              customTextField(
+                  width: MediaQuery.of(context).size.width * 0.876,
+                  height: 25,
+                  hintText: "Password",
+                  textEditingController: _PasswordinputTEXT),
+              SizedBox(height: 60.0),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: customButton(
+                    context: context,
+                    onPressed: LogInButton,
+                    childText: "Log In",
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: 50),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-// customTextField(
-// width: MediaQuery.of(context).size.width * 0.4,
-// height: MediaQuery.of(context).size.height * 0.35,
-// hintText: "LOL",
-// textEditingController: _inputTEXT
-// ),
