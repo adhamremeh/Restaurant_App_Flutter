@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mat3ami/screens/Manger_View/Employees/employee_screen.dart';
 import 'package:mat3ami/screens/Manger_View/Orders_History/Orders_History.dart';
+import 'package:mat3ami/screens/Manger_View/addTables/add_table.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 
 import '../../style/style.dart';
@@ -19,11 +20,12 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
     Tab(text: 'Employee'),
     Tab(text: 'Menu'),
     Tab(text: 'Orders'),
+    Tab(text: "Tables")
   ];
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
 
@@ -74,7 +76,8 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
         Container(
             child: Text("Menu",
                 style: TextStyle(fontSize: 20.0, color: Colors.white))),
-        OrdersHistory()
+        OrdersHistory(),
+        AddTable()
       ]),
     );
   }

@@ -4,6 +4,7 @@ import 'package:mat3ami/business_logic/models/menu_item.dart' as m;
 import 'package:mat3ami/business_logic/view_models/menu_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/table_view_model.dart';
+import 'package:mat3ami/screens/Manger_View/DeafultViewScreen.dart';
 
 import 'package:mat3ami/screens/Manger_View/MenuItem/edit_menu_item_screen.dart';
 
@@ -34,15 +35,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => EmployeeViewModel())
       ],
-      child: MaterialApp(
-          home: EditMenuItemScreen(
-              item: m.MenuItem(
-                  availability: true,
-                  category: 'Koshary',
-                  description: 'rashdan riding',
-                  imageBytes: a7a,
-                  name: 'TestItem',
-                  price: 69))),
+      child: MaterialApp(home: DeafultViewScreen()),
     );
   }
 }
