@@ -27,8 +27,15 @@ class MenuItem {
         description = result['description'],
         imageBytes = result['image'].toString();
 
-  Image decodeImage() {
-    return Image.memory(Base64Decoder().convert(this.imageBytes!));
+  static Image decodeImage(String imageBytes) {
+    imageBytes = imageBytes.replaceAll(" ", "+");
+
+    int mod4 = imageBytes.length % 4;
+    while (mod4 != 0) {
+      imageBytes += '_';
+      mod4 = imageBytes.length % 4;
+    }
+    return Image.memory((Base64Decoder().convert(imageBytes)));
   }
 
   @override
