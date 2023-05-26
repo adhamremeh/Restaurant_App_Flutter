@@ -20,4 +20,10 @@ class OrderViewModel extends ChangeNotifier {
     await OrderServices.modifyOrderStatusInDatabase(orderId, newStatus);
     await updateOrderList();
   }
+
+  Future<void> tableOrder(int tableNum) async {
+    ordersList = (await OrderServices.fetchOrderForTableFromDatabase(tableNum)
+        as List<Order>);
+    notifyListeners();
+  }
 }
