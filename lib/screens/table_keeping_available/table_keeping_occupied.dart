@@ -23,17 +23,25 @@ class _OccupiedTableKeepingState extends State<OccupiedTableKeeping> {
   double total = 0;
 
   Future<void> initializeList() async {
+    await getAllActiveOrdersItemsAndCounts();
+    total = await OrderServices.fetchOrderTotalForTableFromDatabase(
+        allItemsAndCounts);
+    setState(() {});
+  }
+
+  Future<void> getAllActiveOrdersItemsAndCounts() async {
     orderList = await Provider.of<OrderViewModel>(context, listen: false)
         .tableOrder(widget.tableNumber);
     for (final order in orderList) {
       for (final item in order.menuItemsNamesAndCounts.keys) {
-        allItemsAndCounts[item] = (allItemsAndCounts[item] ??
-            0 + order.menuItemsNamesAndCounts[item]!);
+        if (allItemsAndCounts.containsKey(item)) {
+          allItemsAndCounts[item] =
+              allItemsAndCounts[item]! + order.menuItemsNamesAndCounts[item]!;
+        } else {
+          allItemsAndCounts[item] = order.menuItemsNamesAndCounts[item]!;
+        }
       }
     }
-    total = await OrderServices.fetchOrderTotalForTableFromDatabase(
-        allItemsAndCounts);
-    setState(() {});
   }
 
   void initState() {
@@ -127,7 +135,29 @@ class _OccupiedTableKeepingState extends State<OccupiedTableKeeping> {
                 customButton(
                     height: MediaQuery.of(context).size.height * 0.0816,
                     context: context,
-                    onPressed: () {},
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return Container(
+                            color: CustomStyle.colorPalette.lightBackgorund,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: CustomStyle.colorPalette.orange,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                      await Provider.of<OrderViewModel>(context, listen: false)
+                          .checkOutOrder(widget.tableNumber);
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('CheckOut succseful')));
+                      Navigator.of(context, rootNavigator: true).pop();
+                      Navigator.of(context).pop();
+                    },
                     childText: "Check out",
                     color: CustomStyle.colorPalette.orange,
                     shadowColor: CustomStyle.colorPalette.orangeShadow),

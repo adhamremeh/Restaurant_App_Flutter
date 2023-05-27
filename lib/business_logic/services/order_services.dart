@@ -6,10 +6,11 @@ import 'package:mysql1/mysql1.dart';
 
 class OrderServices {
   //add order
-  static Future<void> addOrderToDatabase(int tableNumber,
-      Map<String, int> menuItemsAndAmounts, String comments) async {
+  static Future<void> addOrderToDatabase(
+      int tableNumber, Map<String, int> menuItemsAndAmounts, String comments,
+      {String? state, DateTime? dateTime}) async {
     final String customerOrderQueuery =
-        "insert into customerOrder values (null,'Placed', '${DateTime.now()}', $tableNumber ,'$comments' );";
+        "insert into customerOrder values (null,'${state ?? 'Placed'}', '${dateTime ?? DateTime.now()}', $tableNumber ,'$comments' );";
 
     List<String> orderMenuItemQueueries = [];
 
@@ -71,9 +72,16 @@ class OrderServices {
   }
 
   //delete order
-  static Future<void> deleteOrderInDatabase(int orderId) async {
+  static Future<void> deleteOrdersInDatabase(List<int> orderIds) async {
+    String ids = '( ';
+    for (int id in orderIds) {
+      ids += "$id ,";
+    }
+
+    ids += ')';
+    ids = ids.replaceAll(',)', ')');
     final String deleteQueuery =
-        "delete from orderMenuItems where orderId = $orderId;";
+        "delete from customerOrder where orderId in $ids;";
     await DatabaseServices.queryDatabase(deleteQueuery);
   }
 
