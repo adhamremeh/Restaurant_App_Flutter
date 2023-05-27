@@ -4,57 +4,15 @@ import 'package:mat3ami/business_logic/models/order.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/style/style.dart';
 
-class CustomOrderDetails extends StatefulWidget {
-  CustomOrderDetails({super.key});
-  List<Order> orderlist = [
-    Order(
-        orderId: 1,
-        comments: "This is Pasta",
-        dateTime: DateTime.now(),
-        orderStatus:
-            OrderStates.Placed.toString().replaceFirst("OrderStates.", ""),
-        menuItemsNamesAndCounts: {"Pasta": 1, "Pizza": 2, "koshry": 1},
-        tableNum: 1),
-    Order(
-        orderId: 2,
-        comments: "This is Pepsi",
-        dateTime: DateTime.now(),
-        orderStatus:
-            OrderStates.Placed.toString().replaceFirst("OrderStates.", ""),
-        menuItemsNamesAndCounts: {
-          "Pepsi": 1,
-          "Pizza": 3,
-          "Rice": 1,
-        },
-        tableNum: 2),
-  ];
-  @override
-  State<CustomOrderDetails> createState() => _CustomOrderDetailsState();
-}
-
-class _CustomOrderDetailsState extends State<CustomOrderDetails> {
-  @override
-  Widget build(BuildContext context) {
-    Map<String, int> allItemsAndCounts = {};
-    for (var order in widget.orderlist) {
-      order.menuItemsNamesAndCounts.forEach((key, value) {
-        allItemsAndCounts[key] = (allItemsAndCounts[key] ?? 0) + value;
-      });
-    }
-
-    return Scaffold(
-      body: customOrderDetails(allItemsAndCounts: allItemsAndCounts),
-    );
-  }
-}
-
 class customOrderDetails extends StatelessWidget {
   const customOrderDetails({
     super.key,
     required this.allItemsAndCounts,
+    required this.total,
   });
 
   final Map<String, int> allItemsAndCounts;
+  final double total;
 
   @override
   Widget build(BuildContext context) {
@@ -203,6 +161,16 @@ class customOrderDetails extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Total',
+                                    style: TextStyle(
+                                      color: CustomStyle.colorPalette.textColor,
+                                      fontSize: CustomStyle
+                                          .fontSizes.orderDetailsFont,
+                                      fontFamily: CustomStyle.fontFamily,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    total.toStringAsFixed(2),
                                     style: TextStyle(
                                       color: CustomStyle.colorPalette.textColor,
                                       fontSize: CustomStyle

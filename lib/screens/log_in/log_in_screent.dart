@@ -35,19 +35,37 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   Future<void> LogInButton() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Container(
+          color: CustomStyle.colorPalette.lightBackgorund,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: CustomStyle.colorPalette.orange,
+            ),
+          ),
+        );
+      },
+    );
+
     if (await ActiveUserViewModel.logInUser(
         _UserNameinputTEXT.text, _PasswordinputTEXT.text)) {
+      Navigator.of(context, rootNavigator: true).pop();
       if (ActiveUserViewModel.role == 'Manager') {
         //Navigate to deafult manger screen
       } else if (ActiveUserViewModel.role == 'Chief') {
         //Navigate to orders screen
       } else if (ActiveUserViewModel.role == 'Waiter') {
+        Navigator.of(context, rootNavigator: true).pop();
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const TablesScreen()),
         );
       }
     } else {
+      Navigator.of(context, rootNavigator: true).pop();
       showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -96,6 +114,7 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               customTextField(
                   width: MediaQuery.of(context).size.width * 0.876,
+                  keyboardType: TextInputType.number,
                   height: 25,
                   hintText: "User SSN",
                   textEditingController: _UserNameinputTEXT),

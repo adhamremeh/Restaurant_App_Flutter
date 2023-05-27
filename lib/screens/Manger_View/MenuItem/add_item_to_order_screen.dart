@@ -1,21 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/models/menu_item.dart' as m;
 import 'package:mat3ami/business_logic/services/menu_item_services.dart';
+import 'package:mat3ami/business_logic/services/order_services.dart';
 import 'package:mat3ami/business_logic/view_models/menu_view_model.dart';
-import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
-import 'package:mat3ami/screens/Manger_View/Employees/employee_screen.dart';
-import 'package:mat3ami/screens/Manger_View/Orders_History/Orders_History.dart';
+
 import 'package:mat3ami/screens/common_components/common_components.dart';
-import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
+import 'package:mat3ami/screens/table_keeping_available/table_keeping_occupied.dart';
 import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 
 class AddItemToOrderScreen extends StatefulWidget {
-  AddItemToOrderScreen({super.key, required this.table});
-  TableInRestaurant table;
+  AddItemToOrderScreen({super.key, required this.tableNum});
+  int tableNum;
   @override
   State<AddItemToOrderScreen> createState() => _AddItemToOrderScreenState();
 }
@@ -25,6 +23,8 @@ class _AddItemToOrderScreenState extends State<AddItemToOrderScreen>
   Map<String, List<dynamic>> orderdItemNamesCountsPricesImagesCategories = {};
   late final TabController _tabController;
   late List<m.MenuItem> menuItemList;
+  TextEditingController commentsConttroller = TextEditingController();
+  var timer;
   final List<Tab> myTabs = [
     Tab(text: 'Koshary'),
     Tab(text: 'Additions'),
@@ -37,8 +37,9 @@ class _AddItemToOrderScreenState extends State<AddItemToOrderScreen>
     _tabController = TabController(length: myTabs.length, vsync: this);
     _tabController.addListener(_handleTabSelection);
     initalizeMenu();
+    commentsConttroller.text = '';
 
-    var timer = Timer.periodic(
+    timer = Timer.periodic(
         Duration(seconds: 5),
         (Timer t) => Provider.of<MenuViewModel>(context, listen: false)
             .updateMenuList());
@@ -47,6 +48,7 @@ class _AddItemToOrderScreenState extends State<AddItemToOrderScreen>
   @override
   void dispose() {
     _tabController.dispose();
+    timer.cancel();
     super.dispose();
   }
 
@@ -134,7 +136,34 @@ class _AddItemToOrderScreenState extends State<AddItemToOrderScreen>
                       radius: MediaQuery.of(context).size.height * 0.047,
                       backgroundColor: CustomStyle.colorPalette.orange,
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return Material(
+                                  child: Container(
+                                    color: CustomStyle
+                                        .colorPalette.lightBackgorund,
+                                    child: Center(
+                                        child: SizedBox(
+                                      child: customTextField(
+                                        textEditingController:
+                                            commentsConttroller,
+                                        hintText: 'Add Comments',
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.1,
+                                      ),
+                                    )),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                           child: Text(
                             "C",
                             style: TextStyle(
@@ -145,7 +174,52 @@ class _AddItemToOrderScreenState extends State<AddItemToOrderScreen>
                           ))),
                   customButton(
                       context: context,
-                      onPressed: () {},
+                      onPressed: () async {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return Container(
+                              color: CustomStyle.colorPalette.lightBackgorund,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: CustomStyle.colorPalette.orange,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                        Map<String, int> orderedItems = {};
+                        orderdItemNamesCountsPricesImagesCategories.entries
+                            .forEach((element) {
+                          if (element.value[0] > 0) {
+                            orderedItems[element.key] = element.value[0];
+                          }
+                        });
+                        if (orderedItems.isEmpty) {
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('No items selected')));
+                          Navigator.of(context, rootNavigator: true).pop();
+                          return;
+                        }
+
+                        await OrderServices.addOrderToDatabase(widget.tableNum,
+                            orderedItems, commentsConttroller.text);
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Order Placed succsefully')));
+                        Navigator.of(context, rootNavigator: true).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OccupiedTableKeeping(
+                                    tableNumber: widget.tableNum,
+                                  )),
+                        );
+                      },
                       childText: 'Add To Order')
                 ],
               ))

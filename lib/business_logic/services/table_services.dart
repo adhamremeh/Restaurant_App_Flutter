@@ -5,7 +5,14 @@ import 'package:mysql1/mysql1.dart';
 class TableServices {
   // add new Table
   static Future<void> addNewTableToDatabase() async {
-    const query = "insert into dinningTable values(null, 'Available');";
+    const query = "insert into dinningTable values(null, 'available');";
+    await DatabaseServices.queryDatabase(query);
+  }
+
+  static Future<void> changeTableState(int num, bool occupied) async {
+    String query =
+        "UPDATE dinningTable SET tableStatus = '${(occupied) ? 'occupied' : 'available'}'where tableNumber= $num;";
+
     await DatabaseServices.queryDatabase(query);
   }
 

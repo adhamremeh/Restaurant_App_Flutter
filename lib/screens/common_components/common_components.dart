@@ -82,10 +82,14 @@ Widget customTextField(
     required String hintText,
     required double width,
     required double height,
+    void Function(String)? onchanged,
+    TextInputType? keyboardType,
     Icon? icon}) {
   return SizedBox(
     width: width,
     child: TextField(
+      keyboardType: keyboardType,
+      onChanged: onchanged,
       maxLines: null,
       controller: textEditingController,
       style: TextStyle(color: Colors.white),

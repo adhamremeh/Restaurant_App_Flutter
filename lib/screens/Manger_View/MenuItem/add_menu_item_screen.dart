@@ -98,6 +98,7 @@ class _AddMenuItemScreenState extends State<AddMenuItemScreen> {
               height: MediaQuery.of(context).size.height * 0.05,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width * 0.87,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Item Price",

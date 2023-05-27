@@ -1,21 +1,23 @@
 import 'package:mat3ami/business_logic/models/menu_item.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
 import 'package:mat3ami/business_logic/services/backend_services.dart';
+import 'package:mat3ami/business_logic/services/table_services.dart';
 import 'package:mysql1/mysql1.dart';
 
 class OrderServices {
   //add order
   static Future<void> addOrderToDatabase(int tableNumber,
-      Map<MenuItem, int> menuItemsAndAmounts, String comments) async {
+      Map<String, int> menuItemsAndAmounts, String comments) async {
     final String customerOrderQueuery =
-        "insert into customerOrder values (null,'Placed', '${DateTime.now()}', $tableNumber ,$comments );";
+        "insert into customerOrder values (null,'Placed', '${DateTime.now()}', $tableNumber ,'$comments' );";
 
     List<String> orderMenuItemQueueries = [];
 
     for (final item in menuItemsAndAmounts.entries) {
       orderMenuItemQueueries.add(
-          "insert into orderMenuItems values ( '${item.key.name}', (select orderId from customerOrder order by orderId desc limit 1), ${item.value} );");
+          "insert into orderMenuItems values ( '${item.key}', (select orderId from customerOrder order by orderId desc limit 1), ${item.value} );");
     }
+    await TableServices.changeTableState(tableNumber, true);
 
     await DatabaseServices.queryDatabase(customerOrderQueuery);
     for (String q in orderMenuItemQueueries) {
@@ -108,10 +110,33 @@ class OrderServices {
     return orderList;
   }
 
-  static Future<Order> fetchOrderForTableFromDatabase(int tableNum) async {
+  static Future<List<Order>> fetchOrderForTableFromDatabase(
+      int tableNum) async {
     String query =
-        "SELECT comments, dateAndTime, orderId, orderStatus, tableNumber FROM orders WHERE orderStatus NOT IN ('Completed', 'Cancelled') AND tableNumber = ${tableNum};";
-    final result = await DatabaseServices.queryDatabase(query);
-    return Order.fromDatabase(result.first);
+        "select c.orderId , c.orderStatus, c.dateAndTime, c.tableNumber , c.comments ,GROUP_CONCAT(o.name , ':', o.ammount) as menuItemsNamesAndCounts from customerOrder as c join orderMenuItems as o on c.orderId = o.orderId WHERE orderStatus NOT IN ('Completed', 'Cancelled') AND tableNumber = ${tableNum} GROUP by c.orderId;";
+
+    // "SELECT * FROM orders WHERE orderStatus NOT IN ('Completed', 'Cancelled') AND tableNumber = ${tableNum};";
+    final results = await DatabaseServices.queryDatabase(query);
+    List<Order> orderList = [];
+    for (ResultRow row in results) {
+      orderList.add(Order.fromDatabase(row));
+    }
+    return orderList;
+  }
+
+  static Future<double> fetchOrderTotalForTableFromDatabase(
+      Map<String, int> allItemsAndCounts) async {
+    double total = 0.0;
+    String query = '';
+    Results result;
+    for (final itemName in allItemsAndCounts.keys) {
+      query = "Select price from menuItem where name = '$itemName' ;";
+      result = await DatabaseServices.queryDatabase(query);
+      for (final row in result) {
+        total += (row['price'] as double) * allItemsAndCounts[itemName]!;
+      }
+    }
+
+    return total;
   }
 }

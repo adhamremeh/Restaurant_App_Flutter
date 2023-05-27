@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
-import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/services/order_services.dart';
 
 class OrderViewModel extends ChangeNotifier {
@@ -21,9 +20,10 @@ class OrderViewModel extends ChangeNotifier {
     await updateOrderList();
   }
 
-  Future<void> tableOrder(int tableNum) async {
-    ordersList = (await OrderServices.fetchOrderForTableFromDatabase(tableNum)
-        as List<Order>);
-    notifyListeners();
+  Future<List<Order>> tableOrder(int tableNum) async {
+    final ordersListForTable =
+        (await OrderServices.fetchOrderForTableFromDatabase(tableNum)
+            as List<Order>);
+    return ordersListForTable;
   }
 }

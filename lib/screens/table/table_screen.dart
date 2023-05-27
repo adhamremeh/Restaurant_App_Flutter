@@ -20,6 +20,8 @@ class TablesScreen extends StatefulWidget {
 class _TablesScreenState extends State<TablesScreen> {
   int _selectedBoxIndex = -1;
   late List<TableInRestaurant> tableList;
+  TextEditingController filter = TextEditingController();
+  var timer;
 
   void _onBoxPressed(int index) {
     setState(() {
@@ -31,23 +33,42 @@ class _TablesScreenState extends State<TablesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    var timer = Timer.periodic(
+    timer = Timer.periodic(
         Duration(seconds: 10),
         (Timer t) => Provider.of<TableViewModel>(context, listen: false)
             .updateTableList());
   }
 
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   @override
   @override
   Widget build(BuildContext context) {
-    tableList = Provider.of<TableViewModel>(context, listen: true).tableList;
+    tableList = Provider.of<TableViewModel>(context, listen: true)
+        .tableList
+        .where((element) {
+      if (filter.text != '' && int.tryParse(filter.text) != null) {
+        return element.tableNum == int.parse(filter.text);
+      }
+      return true;
+    }).toList();
     return customScaffold(
       context: context,
       title: 'Tables',
       actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {},
+        Center(
+          child: customTextField(
+              keyboardType: TextInputType.number,
+              textEditingController: filter,
+              onchanged: ((p0) {
+                setState(() {});
+              }),
+              hintText: 'Search',
+              height: MediaQuery.of(context).size.height * 0.01,
+              width: MediaQuery.of(context).size.width * 0.2),
         ),
       ],
       body: Padding(
