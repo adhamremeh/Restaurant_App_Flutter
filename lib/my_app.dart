@@ -5,18 +5,11 @@ import 'package:mat3ami/business_logic/models/menu_item.dart' as m;
 import 'package:mat3ami/business_logic/view_models/menu_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/table_view_model.dart';
-import 'package:mat3ami/screens/Manger_View/DeafultViewScreen.dart';
-import 'package:mat3ami/screens/Manger_View/MenuItem/add_item_to_order_screen.dart';
-
-import 'package:mat3ami/screens/Manger_View/MenuItem/edit_menu_item_screen.dart';
-import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
+import 'package:mat3ami/screens/log_in/log_in_screent.dart';
 
 import 'package:provider/provider.dart';
 
-import 'business_logic/models/employee.dart';
 import 'screens/Manger_View/manger_home_screen.dart';
-import 'screens/waiter/waiter_home_screen.dart';
-import 'screens/log_in/log_in_screent.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -38,7 +31,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => EmployeeViewModel())
       ],
-      child: MaterialApp(home: MangerViewScreen()),
+      child: MaterialApp(home: LogInScreen()),
     );
   }
 }

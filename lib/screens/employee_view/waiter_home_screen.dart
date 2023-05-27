@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mat3ami/screens/Manger_View/Orders_History/Orders_History.dart';
-import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
-import 'package:mat3ami/screens/table/table_screen.dart';
+import 'package:mat3ami/screens/employee_view/orders_screen/orders_screen.dart';
+import 'package:mat3ami/screens/employee_view/table/table_screen.dart';
 import 'package:mat3ami/style/style.dart';
 
 class WaiterMainScreen extends StatefulWidget {

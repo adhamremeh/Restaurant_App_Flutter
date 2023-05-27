@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
 import 'package:mat3ami/business_logic/services/order_services.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
-import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
 import 'package:mat3ami/style/style.dart';
 import 'package:provider/provider.dart';
 

@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mat3ami/business_logic/models/table_in_restaurant.dart';
 import 'package:mat3ami/business_logic/view_models/active_user_view_model.dart';
+import 'package:mat3ami/screens/Manger_View/manger_home_screen.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
-import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
+import 'package:mat3ami/screens/employee_view/orders_screen/orders_screen.dart';
+import 'package:mat3ami/screens/employee_view/waiter_home_screen.dart';
 import 'package:mat3ami/style/style.dart';
-import 'package:provider/provider.dart';
 
-import '../table/table_screen.dart';
+import '../employee_view/table/table_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -53,15 +53,25 @@ class _LogInScreenState extends State<LogInScreen> {
     if (await ActiveUserViewModel.logInUser(
         _UserNameinputTEXT.text, _PasswordinputTEXT.text)) {
       Navigator.of(context, rootNavigator: true).pop();
-      if (ActiveUserViewModel.role == 'Manager') {
-        //Navigate to deafult manger screen
-      } else if (ActiveUserViewModel.role == 'Chief') {
-        //Navigate to orders screen
-      } else if (ActiveUserViewModel.role == 'Waiter') {
+      if (ActiveUserViewModel.role.toLowerCase() == 'manager') {
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const TablesScreen()),
+          MaterialPageRoute(builder: (context) => const MangerViewScreen()),
+        );
+        //Navigate to deafult manger screen
+      } else if (ActiveUserViewModel.role.toLowerCase() == 'kitchen') {
+        Navigator.of(context, rootNavigator: true).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const OrdersScreen()),
+        );
+        //Navigate to orders screen
+      } else if (ActiveUserViewModel.role.toLowerCase() == 'waiter') {
+        Navigator.of(context, rootNavigator: true).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const WaiterMainScreen()),
         );
       }
     } else {
@@ -121,6 +131,7 @@ class _LogInScreenState extends State<LogInScreen> {
               SizedBox(height: 10),
               customTextField(
                   width: MediaQuery.of(context).size.width * 0.876,
+                  keyboardType: TextInputType.text,
                   height: 25,
                   hintText: "Password",
                   textEditingController: _PasswordinputTEXT),

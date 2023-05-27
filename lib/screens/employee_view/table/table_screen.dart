@@ -56,6 +56,7 @@ class _TablesScreenState extends State<TablesScreen> {
       return true;
     }).toList();
     return customScaffold(
+      back: false,
       context: context,
       title: 'Tables',
       actions: [
@@ -75,7 +76,10 @@ class _TablesScreenState extends State<TablesScreen> {
         padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 30, crossAxisSpacing: 10),
+              childAspectRatio: 1.7 / 2,
+              crossAxisCount: 2,
+              mainAxisSpacing: 30,
+              crossAxisSpacing: 10),
           itemCount: tableList.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(

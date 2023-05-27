@@ -5,15 +5,18 @@ Scaffold customScaffold(
     {required BuildContext context,
     required Widget body,
     required String title,
+    bool back = true,
     List<Widget>? actions}) {
   return Scaffold(
     appBar: AppBar(
         centerTitle: true,
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        leading: (back)
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            : null,
         title: Text(
           title,
           style: TextStyle(

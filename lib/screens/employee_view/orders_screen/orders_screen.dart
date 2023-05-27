@@ -40,6 +40,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         .cast<Order>();
 
     return customScaffold(
+        back: false,
         context: context,
         body: Scaffold(
             backgroundColor: CustomStyle.colorPalette.lightBackgorund,
