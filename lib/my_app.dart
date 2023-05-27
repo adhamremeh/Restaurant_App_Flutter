@@ -14,6 +14,8 @@ import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'business_logic/models/employee.dart';
+import 'screens/Manger_View/manger_home_screen.dart';
+import 'screens/waiter/waiter_home_screen.dart';
 import 'screens/log_in/log_in_screent.dart';
 
 class MyApp extends StatelessWidget {
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => EmployeeViewModel())
       ],
-      child: MaterialApp(home: DeafultViewScreen()),
+      child: MaterialApp(home: MangerViewScreen()),
     );
   }
 }

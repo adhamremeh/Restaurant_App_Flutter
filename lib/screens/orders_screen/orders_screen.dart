@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
+import 'package:mat3ami/screens/Manger_View/Orders_History/Orders_History.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
 import 'package:mat3ami/style/style.dart';
@@ -17,12 +18,19 @@ class OrdersScreen extends StatefulWidget {
 late List<Order> orderList;
 
 class _OrdersScreenState extends State<OrdersScreen> {
+  var timer;
   void initState() {
     super.initState();
-    var timer = Timer.periodic(
+    timer = Timer.periodic(
         Duration(seconds: 10),
         (Timer t) => Provider.of<OrderViewModel>(context, listen: false)
             .updateOrderList());
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
