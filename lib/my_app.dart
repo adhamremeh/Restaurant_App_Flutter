@@ -9,6 +9,7 @@ import 'package:mat3ami/screens/Manger_View/DeafultViewScreen.dart';
 import 'package:mat3ami/screens/Manger_View/MenuItem/add_item_to_order_screen.dart';
 
 import 'package:mat3ami/screens/Manger_View/MenuItem/edit_menu_item_screen.dart';
+import 'package:mat3ami/screens/orders_screen/orders_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -23,20 +24,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => TableViewModel(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => MenuViewModel(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => OrderViewModel(),
-          ),
-          ChangeNotifierProvider(create: (context) => EmployeeViewModel())
-        ],
-        child: MaterialApp(
-          home: LogInScreen(),
-        ));
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TableViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MenuViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => OrderViewModel(),
+        ),
+        ChangeNotifierProvider(create: (context) => EmployeeViewModel())
+      ],
+      child: MaterialApp(home: DeafultViewScreen()),
+    );
   }
 }

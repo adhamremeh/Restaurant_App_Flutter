@@ -24,8 +24,17 @@ class _OrdersHistoryState extends State<OrdersHistory> {
     super.initState();
     timer = Timer.periodic(
         Duration(seconds: 10),
-        (Timer t) => Provider.of<OrderViewModel>(context, listen: false)
-            .updateOrderList());
+        (Timer t) async => orderList =
+            await Provider.of<OrderViewModel>(context, listen: false)
+                .mangerViewOrder());
+    initializeState();
+  }
+
+  Future<void> initializeState() async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      orderList = await Provider.of<OrderViewModel>(context, listen: true)
+          .mangerViewOrder();
+    });
   }
 
   @override
@@ -34,12 +43,35 @@ class _OrdersHistoryState extends State<OrdersHistory> {
     super.dispose();
   }
 
+  String completed(int index) {
+    if (orderList[index].orderStatus == "Cancelled" ||
+        orderList[index].orderStatus == "Completed") {
+      return orderList[index].orderStatus;
+    } else {
+      return "Null";
+    }
+  }
+
+  int orderID(int index) {
+    if (orderList[index].orderStatus == "Cancelled" ||
+        orderList[index].orderStatus == "Completed") {
+      return orderList[index].orderId;
+    } else {
+      return 0;
+    }
+  }
+
+  int tableNum(int index) {
+    if (orderList[index].orderStatus == "Cancelled" ||
+        orderList[index].orderStatus == "Completed") {
+      return orderList[index].tableNum;
+    } else {
+      return 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    orderList = Provider.of<OrderViewModel>(context, listen: true)
-        .ordersList
-        .cast<Order>();
-
     return Scaffold(
       body: Container(
         child: ListView.separated(
@@ -52,7 +84,12 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                       color: CustomStyle.colorPalette.green,
                       fontSize: CustomStyle.fontSizes.tableIDOrderMenue),
                 ),
-                trailing: CustomDropDownButton(order: orderList[index]),
+                trailing: customContainer(
+                    color: CustomStyle.colorPalette.orange,
+                    width: MediaQuery.of(context).size.width * 0.38,
+                    height: MediaQuery.of(context).size.height * 0.048,
+                    child:
+                        Center(child: Text("${orderList[index].orderStatus}"))),
                 title: customButton(
                     childText: '#${orderList[index].orderId}',
                     context: context,

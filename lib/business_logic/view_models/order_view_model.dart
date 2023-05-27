@@ -26,4 +26,18 @@ class OrderViewModel extends ChangeNotifier {
             as List<Order>);
     return ordersListForTable;
   }
+
+  Future<List<Order>> mangerViewSearchOrder(int orderId) async {
+    final ordersListForTable =
+        (await OrderServices.SearchOrderForTableMangerViewFromDatabase(orderId)
+            as List<Order>);
+    return ordersListForTable;
+  }
+
+  Future<List<Order>> mangerViewOrder() async {
+    final ordersListForTable =
+        (await OrderServices.fetchOrderForTableMangerViewFromDatabase()
+            as List<Order>);
+    return ordersListForTable;
+  }
 }
