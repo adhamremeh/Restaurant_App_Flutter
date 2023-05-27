@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/order.dart';
+import 'package:mat3ami/business_logic/services/order_services.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
 import 'package:mat3ami/screens/common_components/common_components.dart';
 import 'package:mat3ami/screens/employee_view/orders_screen/orders_screen.dart';
@@ -110,7 +111,12 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                     height: MediaQuery.of(context).size.height * 0.044,
                     color: CustomStyle.colorPalette.orange,
                     shadowColor: CustomStyle.colorPalette.orangeShadow,
-                    onPressed: () {
+                    onPressed: () async {
+                      double totaldouble = await OrderServices
+                          .fetchOrderTotalForTableFromDatabase(
+                              orderListToShow[index - 1]
+                                  .menuItemsNamesAndCounts);
+                      String total = totaldouble.toStringAsFixed(2);
                       //when pressed on the order id pop up screen shows
                       showDialog(
                         context: context,
@@ -130,86 +136,33 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                             content: SizedBox(
                               width: MediaQuery.of(context).size.width * 0.77,
                               height: MediaQuery.of(context).size.height * 0.6,
-                              child: SingleChildScrollView(
-                                physics: ScrollPhysics(),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      width: 200,
-                                      height: 200,
-                                      child: ListView.separated(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemCount: orderListToShow[index - 1]
-                                            .menuItemsNamesAndCounts
-                                            .length,
-                                        separatorBuilder:
-                                            (BuildContext context, int x) =>
-                                                Divider(
-                                          thickness: 2,
-                                          color: CustomStyle
-                                              .colorPalette.textColor,
-                                        ),
-                                        itemBuilder:
-                                            (BuildContext context, int x) {
-                                          return ListTile(
-                                            leading: Text(
-                                              '${orderListToShow[index - 1].menuItemsNamesAndCounts.keys.toList()[x]}',
-                                              style: TextStyle(
-                                                  color: CustomStyle
-                                                      .colorPalette.textColor,
-                                                  fontFamily:
-                                                      CustomStyle.fontFamily,
-                                                  fontSize: CustomStyle
-                                                      .fontSizes.itemOrderFont,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            trailing: Text(
-                                              '${orderListToShow[index - 1].menuItemsNamesAndCounts.values.toList()[x]}',
-                                              style: TextStyle(
-                                                  color: CustomStyle
-                                                      .colorPalette.textColor,
-                                                  fontFamily:
-                                                      CustomStyle.fontFamily,
-                                                  fontSize: CustomStyle
-                                                      .fontSizes.itemOrderFont,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          );
-                                        },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.77 *
+                                        0.7,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.6 *
+                                        0.7,
+                                    child: ListView.separated(
+                                      physics: ScrollPhysics(),
+                                      itemCount: orderListToShow[index - 1]
+                                          .menuItemsNamesAndCounts
+                                          .length,
+                                      separatorBuilder:
+                                          (BuildContext context, int x) =>
+                                              Divider(
+                                        thickness: 2,
+                                        color:
+                                            CustomStyle.colorPalette.textColor,
                                       ),
-                                    ),
-                                    Divider(
-                                      thickness: 2,
-                                      color: CustomStyle.colorPalette.textColor,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Comments ",
-                                            style: TextStyle(
-                                                color: CustomStyle
-                                                    .colorPalette.textColor,
-                                                fontFamily:
-                                                    CustomStyle.fontFamily,
-                                                fontSize: CustomStyle
-                                                    .fontSizes.orderDetailsFont,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            "${orderListToShow[index - 1].comments}",
+                                      itemBuilder:
+                                          (BuildContext context, int x) {
+                                        return ListTile(
+                                          leading: Text(
+                                            '${orderListToShow[index - 1].menuItemsNamesAndCounts.keys.toList()[x]}',
                                             style: TextStyle(
                                                 color: CustomStyle
                                                     .colorPalette.textColor,
@@ -217,11 +170,65 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                                                     CustomStyle.fontFamily,
                                                 fontSize: CustomStyle
                                                     .fontSizes.itemOrderFont,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          trailing: Text(
+                                            '${orderListToShow[index - 1].menuItemsNamesAndCounts.values.toList()[x]}',
+                                            style: TextStyle(
+                                                color: CustomStyle
+                                                    .colorPalette.textColor,
+                                                fontFamily:
+                                                    CustomStyle.fontFamily,
+                                                fontSize: CustomStyle
+                                                    .fontSizes.itemOrderFont,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Divider(
+                                    thickness: 2,
+                                    color: CustomStyle.colorPalette.textColor,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Total ",
+                                          style: TextStyle(
+                                              color: CustomStyle
+                                                  .colorPalette.textColor,
+                                              fontFamily:
+                                                  CustomStyle.fontFamily,
+                                              fontSize: CustomStyle
+                                                  .fontSizes.orderDetailsFont,
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          //TODO:
+                                          total,
+                                          style: TextStyle(
+                                              color: CustomStyle
+                                                  .colorPalette.textColor,
+                                              fontFamily:
+                                                  CustomStyle.fontFamily,
+                                              fontSize: CustomStyle
+                                                  .fontSizes.itemOrderFont,
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                             actions: [
