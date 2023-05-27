@@ -147,4 +147,31 @@ class OrderServices {
 
     return total;
   }
+
+  static Future<List<Order>> fetchOrderForTableMangerViewFromDatabase() async {
+    String query =
+        "SELECT c.orderId, c.orderStatus, c.dateAndTime, c.tableNumber, c.comments, GROUP_CONCAT(o.name, ':', o.ammount) AS menuItemsNamesAndCounts FROM customerOrder AS c JOIN orderMenuItems AS o ON c.orderId = o.orderId WHERE c.orderStatus NOT IN ('Placed', 'Ready', 'Preparing', 'Served') GROUP BY c.orderId";
+
+    // "SELECT * FROM orders WHERE orderStatus NOT IN ('Completed', 'Cancelled') AND tableNumber = ${tableNum};";
+    final results = await DatabaseServices.queryDatabase(query);
+    List<Order> orderList = [];
+    for (ResultRow row in results) {
+      orderList.add(Order.fromDatabase(row));
+    }
+    return orderList;
+  }
+
+  static Future<List<Order>> SearchOrderForTableMangerViewFromDatabase(
+      int orderId) async {
+    String query =
+        "SELECT c.orderId, c.orderStatus, c.dateAndTime, c.tableNumber, c.comments, GROUP_CONCAT(o.name, ':', o.ammount) AS menuItemsNamesAndCounts FROM customerOrder AS c JOIN orderMenuItems AS o ON c.orderId = o.orderId WHERE c.orderStatus NOT IN ('Placed', 'Ready', 'Preparing', 'Served') and c.orderId=$orderId GROUP BY c.orderId";
+
+    // "SELECT * FROM orders WHERE orderStatus NOT IN ('Completed', 'Cancelled') AND tableNumber = ${tableNum};";
+    final results = await DatabaseServices.queryDatabase(query);
+    List<Order> orderList = [];
+    for (ResultRow row in results) {
+      orderList.add(Order.fromDatabase(row));
+    }
+    return orderList;
+  }
 }
