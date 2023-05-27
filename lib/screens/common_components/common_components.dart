@@ -143,6 +143,8 @@ class CustomDropDownButton extends StatefulWidget {
 
 class _CustomDropDownButtonState extends State<CustomDropDownButton> {
   List<String> options = OrderStates.values
+      .where((element) =>
+          element != OrderStates.Completed && element != OrderStates.Cancelled)
       .map((e) => e.toString().replaceFirst('OrderStates.', ''))
       .toList();
   late Color selectedColor;
@@ -167,14 +169,6 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
         OrderStates.Served.toString().replaceFirst('OrderStates.', '')) {
       selectedColor = CustomStyle.colorPalette.green;
       selectedColorShadow = CustomStyle.colorPalette.greenShadow;
-    } else if (widget.selectedOption ==
-        OrderStates.Completed.toString().replaceFirst('OrderStates.', '')) {
-      selectedColor = CustomStyle.colorPalette.blue;
-      selectedColorShadow = CustomStyle.colorPalette.blueShadow;
-    } else if (widget.selectedOption ==
-        OrderStates.Cancelled.toString().replaceFirst('OrderStates.', '')) {
-      selectedColor = CustomStyle.colorPalette.red;
-      selectedColorShadow = CustomStyle.colorPalette.redShadow;
     } else {
       selectedColor = CustomStyle.colorPalette.textFieldColor;
       selectedColorShadow = CustomStyle.colorPalette.textFieldShadow;
