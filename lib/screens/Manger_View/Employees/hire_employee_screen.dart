@@ -72,8 +72,9 @@ class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
           .addEmployee(employee);
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Employee Edited succsefuly')));
+          .showSnackBar(SnackBar(content: Text('Employee Hired succsefuly')));
       Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(context).pop();
     }
   }
 
@@ -93,6 +94,7 @@ class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 customTextField(
+                    keyboardType: TextInputType.text,
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: MediaQuery.of(context).size.height * 0.036,
                     hintText: "First Name",
@@ -101,6 +103,7 @@ class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
                   width: MediaQuery.of(context).size.width * 0.07,
                 ),
                 customTextField(
+                    keyboardType: TextInputType.text,
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: MediaQuery.of(context).size.height * 0.036,
                     hintText: "Last Name",
@@ -111,6 +114,7 @@ class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.text,
                 width: MediaQuery.of(context).size.width * 0.87,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Password",
@@ -119,6 +123,7 @@ class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width / 1.15,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "First Phone Number",
@@ -127,6 +132,7 @@ class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width / 1.15,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Second Phone Number",
@@ -135,6 +141,7 @@ class _HireEmployeeScreenState extends State<HireEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width / 1.15,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Salary",

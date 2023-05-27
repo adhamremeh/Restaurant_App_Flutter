@@ -75,12 +75,12 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
 
       await Provider.of<EmployeeViewModel>(context, listen: false)
           .updateEmployee(widget.employee);
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Employee Edited succsefuly')));
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(context).pop();
     }
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Employee Edited succsefuly')));
-    Navigator.of(context, rootNavigator: true).pop();
-    Navigator.of(context).pop();
   }
 
   Future<void> FireButton() async {
@@ -123,6 +123,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 customTextField(
+                    keyboardType: TextInputType.text,
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: MediaQuery.of(context).size.height * 0.036,
                     hintText: "First Name",
@@ -131,6 +132,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
                   width: MediaQuery.of(context).size.width * 0.07,
                 ),
                 customTextField(
+                    keyboardType: TextInputType.text,
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: MediaQuery.of(context).size.height * 0.036,
                     hintText: "Last Name",
@@ -141,6 +143,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.text,
                 width: MediaQuery.of(context).size.width * 0.87,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Password",
@@ -149,6 +152,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width / 1.15,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "First Phone Number",
@@ -157,6 +161,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width / 1.15,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Second Phone Number",
@@ -165,6 +170,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width / 1.15,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Salary",

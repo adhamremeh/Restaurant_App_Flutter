@@ -22,7 +22,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(
-        Duration(seconds: 10),
+        Duration(seconds: 5),
         (Timer t) => Provider.of<OrderViewModel>(context, listen: false)
             .updateOrderList());
   }
@@ -37,7 +37,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Widget build(BuildContext context) {
     orderList = Provider.of<OrderViewModel>(context, listen: true)
         .ordersList
-        .cast<Order>();
+        .cast<Order>()
+        .where((element) =>
+            element.orderStatus.toLowerCase() != 'completed' &&
+            element.orderStatus.toLowerCase() != 'cancelled')
+        .toList();
 
     return customScaffold(
         back: false,

@@ -26,7 +26,7 @@ class Employee {
         lName = result['lName'],
         employeeRole = result['employeeRole'],
         password = result['password'],
-        phone = result['phone'] == null
+        phone = result['phone'] != null
             ? result['phone'].toString().split(',')
             : [],
         salary = result['salary'] as double;
