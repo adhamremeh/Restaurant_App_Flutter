@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mat3ami/screens/Manger_View/Employees/employee_screen.dart';
+import 'package:mat3ami/screens/Manger_View/MenuItem/mange_menu_items_screen.dart';
 import 'package:mat3ami/screens/Manger_View/Orders_History/Orders_History.dart';
 import 'package:mat3ami/screens/Manger_View/addTables/add_table.dart';
 import 'package:mat3ami/screens/common_components/custom_scaffold.dart';
@@ -18,8 +19,9 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
   late final TabController _tabController;
   final List<Tab> myTabs = [
     Tab(text: 'Employee'),
+    Tab(text: 'Menu'),
+    Tab(text: "Tables"),
     Tab(text: 'Orders'),
-    Tab(text: "Tables")
   ];
   @override
   void initState() {
@@ -55,10 +57,6 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
             tabs: myTabs),
         centerTitle: true,
         toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         title: Text(
           "Manger View",
           style: TextStyle(
@@ -70,9 +68,12 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
         backgroundColor: CustomStyle.colorPalette.darkBackground,
       ),
       backgroundColor: CustomStyle.colorPalette.lightBackgorund,
-      body: TabBarView(
-          controller: _tabController,
-          children: [EmployeeScreen(), OrdersHistory(), AddTable()]),
+      body: TabBarView(controller: _tabController, children: [
+        EmployeeScreen(),
+        ManageMenuItemsScreen(),
+        AddTable(),
+        OrdersHistory(),
+      ]),
     );
   }
 }

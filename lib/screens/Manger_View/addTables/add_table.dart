@@ -77,12 +77,46 @@ class _AddTableState extends State<AddTable> {
                         fontFamily: CustomStyle.fontFamily,
                         color: CustomStyle.colorPalette.textColor,
                         fontWeight: FontWeight.bold)),
+                title: customContainer(
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.048,
+                    child: Center(
+                        child: Text(
+                      "${tableList[index].state}",
+                      style: TextStyle(
+                          fontFamily: CustomStyle.fontFamily,
+                          color:
+                              tableList[index].state.toLowerCase() == 'occupied'
+                                  ? CustomStyle.colorPalette.orange
+                                  : CustomStyle.colorPalette.green,
+                          fontWeight: FontWeight.bold),
+                    ))),
                 trailing: customButton(
                     context: context,
-                    onPressed: () {
-                      //delete command
-                      deleteTable(tableList[index].tableNum);
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return Container(
+                            color: CustomStyle.colorPalette.lightBackgorund,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: CustomStyle.colorPalette.orange,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                      await deleteTable(tableList[index].tableNum);
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Table Deleted succsefuly')));
+                      Navigator.of(context, rootNavigator: true).pop();
                     },
+
+                    //delete command
+
                     childText: "Delete",
                     width: MediaQuery.of(context).size.width * 0.3,
                     height: MediaQuery.of(context).size.height * 0.05,
@@ -105,9 +139,26 @@ class _AddTableState extends State<AddTable> {
                   height: MediaQuery.of(context).size.height * 0.0812,
                   width: MediaQuery.of(context).size.width * 0.7044,
                   context: context,
-                  onPressed: () {
-                    //add table command
-                    addNewTable();
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) {
+                        return Container(
+                          color: CustomStyle.colorPalette.lightBackgorund,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: CustomStyle.colorPalette.orange,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                    await addNewTable();
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Table Added succsefuly')));
+                    Navigator.of(context, rootNavigator: true).pop();
                   },
                   childText: "Add New Table"),
               SizedBox(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mat3ami/business_logic/models/employee.dart';
+import 'package:mat3ami/business_logic/services/employee_services.dart';
 import 'package:mat3ami/business_logic/view_models/active_user_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/employee_view_model.dart';
 import 'package:mat3ami/business_logic/view_models/order_view_model.dart';
@@ -28,24 +29,27 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   @override
   void initState() {
     super.initState();
+    initializeState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
       Provider.of<EmployeeViewModel>(context, listen: false)
           .updateEmployeeList();
-      employeesList =
-          (Provider.of<EmployeeViewModel>(context, listen: false).employeeList);
-      setState(() {});
+
+      setState(() {
+        employeesList =
+            Provider.of<EmployeeViewModel>(context, listen: false).employeeList;
+      });
     });
   }
 
   Future<void> initializeState() async {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await Provider.of<EmployeeViewModel>(context, listen: false)
-          .updateEmployeeList();
-      employeesList =
-          Provider.of<EmployeeViewModel>(context, listen: false).employeeList;
-
+    employeesList = await EmployeeServices.fetchAllEmlpoyeesFromDatabase();
+    if (mounted) {
       setState(() {});
-    });
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        employeesList =
+            Provider.of<EmployeeViewModel>(context, listen: false).employeeList;
+      });
+    }
   }
 
   @override

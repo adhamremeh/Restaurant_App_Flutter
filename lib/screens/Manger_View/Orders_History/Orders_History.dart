@@ -39,7 +39,9 @@ class _OrdersHistoryState extends State<OrdersHistory> {
           .mangerViewOrder());
       orderListToShow = orderList;
 
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 

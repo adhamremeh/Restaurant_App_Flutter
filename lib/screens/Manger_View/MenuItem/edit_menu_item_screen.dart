@@ -40,6 +40,7 @@ class _EditMenuItemScreenState extends State<EditMenuItemScreen> {
     _ItemPriceInputText.text = widget.item.price.toString();
     _categoryInputText.text = widget.item.category;
     dropdownValue = widget.item.category;
+    imageBytes = widget.item.imageBytes;
   }
 
   Future<void> editMenuItem() async {
@@ -71,6 +72,7 @@ class _EditMenuItemScreenState extends State<EditMenuItemScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Item updated succsefuly')));
       Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(context).pop();
     }
   }
 
@@ -95,6 +97,7 @@ class _EditMenuItemScreenState extends State<EditMenuItemScreen> {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Item Deleted succsefuly')));
     Navigator.of(context, rootNavigator: true).pop();
+    Navigator.of(context).pop();
   }
 
   @override
@@ -127,6 +130,7 @@ class _EditMenuItemScreenState extends State<EditMenuItemScreen> {
               height: MediaQuery.of(context).size.height * 0.05,
             ),
             customTextField(
+                keyboardType: TextInputType.text,
                 width: MediaQuery.of(context).size.width * 0.87,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: " Item Description",
@@ -135,6 +139,7 @@ class _EditMenuItemScreenState extends State<EditMenuItemScreen> {
               height: MediaQuery.of(context).size.height * 0.05,
             ),
             customTextField(
+                keyboardType: TextInputType.number,
                 width: MediaQuery.of(context).size.width * 0.87,
                 height: MediaQuery.of(context).size.height * 0.036,
                 hintText: "Item Price",
