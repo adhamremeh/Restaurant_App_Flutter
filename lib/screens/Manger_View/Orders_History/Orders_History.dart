@@ -15,8 +15,10 @@ class OrdersHistory extends StatefulWidget {
   State<OrdersHistory> createState() => _OrdersHistoryState();
 }
 
-late List<Order> orderList;
+List<Order> orderListToShow = [];
+List<Order> orderList = [];
 var timer;
+TextEditingController filter = TextEditingController();
 
 class _OrdersHistoryState extends State<OrdersHistory> {
   @override
@@ -25,15 +27,19 @@ class _OrdersHistoryState extends State<OrdersHistory> {
     timer = Timer.periodic(
         Duration(seconds: 10),
         (Timer t) async => orderList =
-            await Provider.of<OrderViewModel>(context, listen: false)
-                .mangerViewOrder());
+            (await Provider.of<OrderViewModel>(context, listen: false)
+                    .mangerViewOrder())
+                .toList());
     initializeState();
   }
 
   Future<void> initializeState() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      orderList = await Provider.of<OrderViewModel>(context, listen: true)
-          .mangerViewOrder();
+      orderList = (await Provider.of<OrderViewModel>(context, listen: false)
+          .mangerViewOrder());
+      orderListToShow = orderList;
+
+      setState(() {});
     });
   }
 
@@ -43,60 +49,65 @@ class _OrdersHistoryState extends State<OrdersHistory> {
     super.dispose();
   }
 
-  String completed(int index) {
-    if (orderList[index].orderStatus == "Cancelled" ||
-        orderList[index].orderStatus == "Completed") {
-      return orderList[index].orderStatus;
-    } else {
-      return "Null";
-    }
-  }
-
-  int orderID(int index) {
-    if (orderList[index].orderStatus == "Cancelled" ||
-        orderList[index].orderStatus == "Completed") {
-      return orderList[index].orderId;
-    } else {
-      return 0;
-    }
-  }
-
-  int tableNum(int index) {
-    if (orderList[index].orderStatus == "Cancelled" ||
-        orderList[index].orderStatus == "Completed") {
-      return orderList[index].tableNum;
-    } else {
-      return 0;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: ListView.separated(
-          itemCount: orderList.length,
+          itemCount: orderListToShow.length + 1,
           itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return ListTile(
+                title: customTextField(
+                    keyboardType: TextInputType.number,
+                    textEditingController: filter,
+                    onchanged: ((p0) {
+                      setState(() {
+                        orderListToShow = orderList.where((element) {
+                          if (filter.text != '' &&
+                              int.tryParse(filter.text) != null) {
+                            return element.orderId
+                                .toString()
+                                .contains(filter.text);
+                          }
+                          return true;
+                        }).toList();
+                      });
+                    }),
+                    hintText: 'Search',
+                    height: MediaQuery.of(context).size.height * 0.01,
+                    width: MediaQuery.of(context).size.width * 0.5),
+              );
+            }
             return ListTile(
                 leading: Text(
-                  "${orderList[index].tableNum}",
+                  "${orderListToShow[index - 1].dateTime.year} : ${orderListToShow[index - 1].dateTime.month} : ${orderListToShow[index - 1].dateTime.day} : ${orderListToShow[index - 1].dateTime.hour}",
                   style: TextStyle(
-                      color: CustomStyle.colorPalette.green,
-                      fontSize: CustomStyle.fontSizes.tableIDOrderMenue),
+                      color: CustomStyle.colorPalette.green, fontSize: 14),
                 ),
                 trailing: customContainer(
-                    color: CustomStyle.colorPalette.orange,
-                    width: MediaQuery.of(context).size.width * 0.38,
+                    color:
+                        orderListToShow[index - 1].orderStatus.toLowerCase() ==
+                                'completed'
+                            ? CustomStyle.colorPalette.blue
+                            : CustomStyle.colorPalette.red,
+                    width: MediaQuery.of(context).size.width * 0.25,
                     height: MediaQuery.of(context).size.height * 0.048,
-                    child:
-                        Center(child: Text("${orderList[index].orderStatus}"))),
+                    child: Center(
+                        child: Text(
+                      "${orderListToShow[index - 1].orderStatus}",
+                      style: TextStyle(
+                          fontFamily: CustomStyle.fontFamily,
+                          color: CustomStyle.colorPalette.textColor,
+                          fontWeight: FontWeight.bold),
+                    ))),
                 title: customButton(
-                    childText: '#${orderList[index].orderId}',
+                    childText: '#${orderListToShow[index - 1].orderId}',
                     context: context,
                     width: MediaQuery.of(context).size.width * 0.25,
                     height: MediaQuery.of(context).size.height * 0.044,
-                    color: CustomStyle.colorPalette.lightBackgorund,
-                    shadowColor: CustomStyle.colorPalette.lightBackgorund,
+                    color: CustomStyle.colorPalette.orange,
+                    shadowColor: CustomStyle.colorPalette.orangeShadow,
                     onPressed: () {
                       //when pressed on the order id pop up screen shows
                       showDialog(
@@ -126,7 +137,7 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                                       height: 200,
                                       child: ListView.separated(
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemCount: orderList[index]
+                                        itemCount: orderListToShow[index - 1]
                                             .menuItemsNamesAndCounts
                                             .length,
                                         separatorBuilder:
@@ -140,7 +151,7 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                                             (BuildContext context, int x) {
                                           return ListTile(
                                             leading: Text(
-                                              '${orderList[index].menuItemsNamesAndCounts.keys.toList()[x]}',
+                                              '${orderListToShow[index - 1].menuItemsNamesAndCounts.keys.toList()[x]}',
                                               style: TextStyle(
                                                   color: CustomStyle
                                                       .colorPalette.textColor,
@@ -151,7 +162,7 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             trailing: Text(
-                                              '${orderList[index].menuItemsNamesAndCounts.values.toList()[x]}',
+                                              '${orderListToShow[index - 1].menuItemsNamesAndCounts.values.toList()[x]}',
                                               style: TextStyle(
                                                   color: CustomStyle
                                                       .colorPalette.textColor,
@@ -195,7 +206,8 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("${orderList[index].comments}",
+                                        Text(
+                                            "${orderListToShow[index - 1].comments}",
                                             style: TextStyle(
                                                 color: CustomStyle
                                                     .colorPalette.textColor,

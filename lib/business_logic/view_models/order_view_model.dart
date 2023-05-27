@@ -54,18 +54,19 @@ class OrderViewModel extends ChangeNotifier {
     await OrderServices.deleteOrdersInDatabase(ids);
     await TableServices.changeTableState(tableNum, false);
     updateOrderList();
-    Future<List<Order>> mangerViewSearchOrder(int orderId) async {
-      final ordersListForTable =
-          (await OrderServices.SearchOrderForTableMangerViewFromDatabase(
-              orderId) as List<Order>);
-      return ordersListForTable;
-    }
+  }
 
-    Future<List<Order>> mangerViewOrder() async {
-      final ordersListForTable =
-          (await OrderServices.fetchOrderForTableMangerViewFromDatabase()
-              as List<Order>);
-      return ordersListForTable;
-    }
+  Future<List<Order>> mangerViewSearchOrder(int orderId) async {
+    final ordersListForTable =
+        (await OrderServices.SearchOrderForTableMangerViewFromDatabase(orderId)
+            as List<Order>);
+    return ordersListForTable;
+  }
+
+  Future<List<Order>> mangerViewOrder() async {
+    final ordersListForTable =
+        (await OrderServices.fetchOrderForTableMangerViewFromDatabase()
+            as List<Order>);
+    return ordersListForTable;
   }
 }

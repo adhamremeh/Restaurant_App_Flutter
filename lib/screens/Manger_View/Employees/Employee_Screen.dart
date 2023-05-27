@@ -23,15 +23,29 @@ class EmployeeScreen extends StatefulWidget {
 }
 
 class _EmployeeScreenState extends State<EmployeeScreen> {
-  late List<Employee> employeesList;
+  List<Employee> employeesList = [];
   var timer;
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(
-        Duration(seconds: 10),
-        (Timer t) => Provider.of<EmployeeViewModel>(context, listen: false)
-            .updateEmployeeList());
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
+      Provider.of<EmployeeViewModel>(context, listen: false)
+          .updateEmployeeList();
+      employeesList =
+          (Provider.of<EmployeeViewModel>(context, listen: false).employeeList);
+      setState(() {});
+    });
+  }
+
+  Future<void> initializeState() async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await Provider.of<EmployeeViewModel>(context, listen: false)
+          .updateEmployeeList();
+      employeesList =
+          Provider.of<EmployeeViewModel>(context, listen: false).employeeList;
+
+      setState(() {});
+    });
   }
 
   @override
@@ -42,9 +56,6 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    employeesList = Provider.of<EmployeeViewModel>(context, listen: true)
-        .employeeList
-        .cast<Employee>();
     return Scaffold(
       backgroundColor: CustomStyle.colorPalette.lightBackgorund,
       body: Column(

@@ -80,6 +80,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Employee Edited succsefuly')));
     Navigator.of(context, rootNavigator: true).pop();
+    Navigator.of(context).pop();
   }
 
   Future<void> FireButton() async {
@@ -103,6 +104,7 @@ class _EditEmployeeState extends State<EditEmployeeScreen> {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Employee deleted succsefuly')));
     Navigator.of(context, rootNavigator: true).pop();
+    Navigator.of(context).pop();
   }
 
   @override

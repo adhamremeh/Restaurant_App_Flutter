@@ -84,8 +84,8 @@ class _AddTableState extends State<AddTable> {
                       deleteTable(tableList[index].tableNum);
                     },
                     childText: "Delete",
-                    width: MediaQuery.of(context).size.width * 0.23,
-                    height: MediaQuery.of(context).size.height * 0.035,
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.05,
                     color: CustomStyle.colorPalette.red),
               );
             },

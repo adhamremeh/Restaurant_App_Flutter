@@ -18,14 +18,13 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
   late final TabController _tabController;
   final List<Tab> myTabs = [
     Tab(text: 'Employee'),
-    Tab(text: 'Menu'),
     Tab(text: 'Orders'),
     Tab(text: "Tables")
   ];
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: myTabs.length, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
 
@@ -71,14 +70,9 @@ class _DeafultViewScreenState extends State<DeafultViewScreen>
         backgroundColor: CustomStyle.colorPalette.darkBackground,
       ),
       backgroundColor: CustomStyle.colorPalette.lightBackgorund,
-      body: TabBarView(controller: _tabController, children: [
-        EmployeeScreen(),
-        Container(
-            child: Text("Menu",
-                style: TextStyle(fontSize: 20.0, color: Colors.white))),
-        OrdersHistory(),
-        AddTable()
-      ]),
+      body: TabBarView(
+          controller: _tabController,
+          children: [EmployeeScreen(), OrdersHistory(), AddTable()]),
     );
   }
 }
